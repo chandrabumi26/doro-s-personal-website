@@ -1,36 +1,159 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🌊 Dorojatun Chandrabumi - Personal Portfolio
 
-## Getting Started
+<div align="center">
 
-First, run the development server:
+![Next.js](https://img.shields.io/badge/Next.js-16-black?style=for-the-badge&logo=next.js)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?style=for-the-badge&logo=typescript)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind-4-38bdf8?style=for-the-badge&logo=tailwindcss)
+![Motion](https://img.shields.io/badge/Motion-Animations-ff69b4?style=for-the-badge)
+
+A stunning personal portfolio website with smooth animations, scroll effects, and a unique drawer-style project showcase.
+
+[Live Demo](#) • [Features](#-features) • [Tech Stack](#-tech-stack) • [Getting Started](#-getting-started)
+
+</div>
+
+---
+
+## ✨ Features
+
+- **🎨 50s Retro Aesthetic** - Beautiful color palette with tosca/light blue, matte nude tones, and warm accents
+- **📜 Smooth Scroll Animations** - Scroll-triggered reveal animations throughout the page
+- **🗂️ Interactive Project Drawer** - Unique filing cabinet metaphor with documents that fan out on hover
+- **🔵 Scroll Navigation Dots** - Fixed left-side navigation indicating current section
+- **📱 Fully Responsive** - Optimized for all screen sizes
+- **⚡ Blazing Fast** - Built with Next.js 16 and Turbopack
+- **🌙 SEO Optimized** - Proper meta tags and semantic HTML
+
+## 🎬 Animations
+
+| Animation | Description |
+|-----------|-------------|
+| Hero Text Reveal | Staggered letter-by-letter animation |
+| Scroll Reveal | Elements fade in as you scroll |
+| Drawer Preview | 3 documents fan out when hovering the drawer |
+| Drawer Open/Close | Smooth height animation with staggered cards |
+| Skill Cards | Lift and glow on hover |
+| Navigation Dots | Pulse animation on active section |
+
+## 🛠 Tech Stack
+
+- **Framework:** [Next.js 16](https://nextjs.org/) with App Router
+- **Language:** [TypeScript](https://www.typescriptlang.org/)
+- **Styling:** [Tailwind CSS v4](https://tailwindcss.com/)
+- **Animations:** [Motion](https://motion.dev/) (formerly Framer Motion)
+- **Font:** [Geist](https://vercel.com/font) by Vercel
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js 18+ 
+- npm or pnpm
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/yourusername/chandrabumi-website.git
+   cd chandrabumi-website
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   # or
+   pnpm install
+   ```
+
+3. **Run development server**
+   ```bash
+   npm run dev
+   ```
+
+4. **Open in browser**
+   ```
+   http://localhost:3000
+   ```
+
+### Build for Production
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run build
+npm run start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 📁 Project Structure
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+app/
+├── components/
+│   ├── Header.tsx       # Fixed navigation with mobile menu
+│   ├── Hero.tsx         # Animated hero section
+│   ├── About.tsx        # About section with stats
+│   ├── Skills.tsx       # Tech stack display
+│   ├── Projects.tsx     # Drawer-style project showcase
+│   ├── Contact.tsx      # Contact information
+│   ├── Footer.tsx       # Footer with social links
+│   ├── ScrollNav.tsx    # Left-side dot navigation
+│   └── ScrollReveal.tsx # Reusable scroll animation wrapper
+├── globals.css          # Global styles & color palette
+├── layout.tsx           # Root layout with metadata
+└── page.tsx             # Main page composition
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🎨 Color Palette
 
-## Learn More
+| Color | Hex | Usage |
+|-------|-----|-------|
+| Tosca | `#5FBDBD` | Primary accent |
+| Tosca Light | `#78CAD2` | Hover states |
+| Nude | `#E8D4C4` | Secondary backgrounds |
+| Cream | `#FDF8F3` | Main background |
+| Charcoal | `#3D3D3D` | Text |
+| Peach | `#F5D5C8` | Decorative accents |
 
-To learn more about Next.js, take a look at the following resources:
+## 📝 Customization
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Update Personal Info
+Edit the content in each component file under `app/components/`.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Add Projects
+Modify the `projects` array in `app/components/Projects.tsx`:
 
-## Deploy on Vercel
+```typescript
+const projects = [
+  {
+    id: 1,
+    title: "Your Project",
+    description: "Project description",
+    image: "🚀", // or use an actual image
+    tags: ["React", "TypeScript"],
+    color: "bg-tosca",
+  },
+  // ...more projects
+];
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Change Colors
+Update the CSS variables in `app/globals.css`:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```css
+:root {
+  --tosca: #5FBDBD;
+  --nude: #E8D4C4;
+  /* ...etc */
+}
+```
+
+## 📄 License
+
+MIT License - feel free to use this for your own portfolio!
+
+---
+
+<div align="center">
+
+Made with 💙 by **Dorojatun Chandrabumi**
+
+</div>
