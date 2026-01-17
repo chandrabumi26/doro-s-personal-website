@@ -67,7 +67,7 @@ export default function Footer() {
     const currentYear = new Date().getFullYear();
 
     return (
-        <footer className="relative bg-gradient-to-b from-charcoal to-charcoal/95 text-soft-white overflow-hidden">
+        <footer className="scroll-snap-section relative bg-gradient-to-b from-charcoal to-charcoal/95 text-soft-white overflow-hidden">
             {/* Decorative top wave */}
             <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-tosca/50 to-transparent" />
 

@@ -15,8 +15,11 @@ export default function ScrollNav() {
     const [activeSection, setActiveSection] = useState("home");
 
     useEffect(() => {
+        const container = document.querySelector('.scroll-snap-container');
+        if (!container) return;
+
         const handleScroll = () => {
-            const scrollPosition = window.scrollY + window.innerHeight / 3;
+            const scrollPosition = container.scrollTop + window.innerHeight / 3;
 
             for (const section of sections) {
                 const element = document.getElementById(section.id);
@@ -33,9 +36,9 @@ export default function ScrollNav() {
             }
         };
 
-        window.addEventListener("scroll", handleScroll);
+        container.addEventListener("scroll", handleScroll);
         handleScroll(); // Check initial position
-        return () => window.removeEventListener("scroll", handleScroll);
+        return () => container.removeEventListener("scroll", handleScroll);
     }, []);
 
     const scrollToSection = (id: string) => {
@@ -77,8 +80,8 @@ export default function ScrollNav() {
                         {/* Dot */}
                         <motion.div
                             className={`relative z-10 rounded-full transition-all duration-300 ${isActive
-                                    ? "w-3.5 h-3.5 bg-tosca shadow-lg shadow-tosca/40"
-                                    : "w-2.5 h-2.5 bg-charcoal/30 hover:bg-tosca/50"
+                                ? "w-3.5 h-3.5 bg-tosca shadow-lg shadow-tosca/40"
+                                : "w-2.5 h-2.5 bg-charcoal/30 hover:bg-tosca/50"
                                 }`}
                             whileHover={{ scale: 1.2 }}
                             whileTap={{ scale: 0.9 }}

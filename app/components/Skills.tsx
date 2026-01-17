@@ -32,7 +32,7 @@ const skills = [
 
 export default function Skills() {
     return (
-        <section id="skills" className="py-24 bg-soft-white relative overflow-hidden">
+        <section id="skills" className="scroll-snap-section py-24 bg-soft-white relative overflow-hidden">
             {/* Decorative elements */}
             <div className="absolute top-1/4 right-0 w-72 h-72 bg-peach/20 rounded-full blur-3xl" />
             <div className="absolute bottom-1/4 left-0 w-56 h-56 bg-tosca-light/15 rounded-full blur-3xl" />

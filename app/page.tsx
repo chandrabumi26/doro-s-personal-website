@@ -12,14 +12,14 @@ export default function Home() {
     <>
       <Header />
       <ScrollNav />
-      <main>
+      <main className="scroll-snap-container">
         <Hero />
         <About />
         <Skills />
         <Projects />
         <Contact />
+        {/* <Footer /> */}
       </main>
-      <Footer />
     </>
   );
 }

@@ -14,7 +14,7 @@ export default function Hero() {
     return (
         <section
             id="home"
-            className="min-h-screen flex items-center justify-center relative overflow-hidden retro-texture"
+            className="scroll-snap-section min-h-screen flex items-center justify-center relative overflow-hidden retro-texture"
         >
             {/* Decorative elements - 50s style */}
             <div className="absolute top-20 right-10 w-32 h-32 rounded-full bg-tosca-light/20 blur-3xl" />

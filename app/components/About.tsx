@@ -25,7 +25,7 @@ export default function About() {
             opacity: 1,
             y: 0,
             transition: {
-                type: "spring",
+                type: "spring" as const,
                 stiffness: 100,
                 damping: 15,
             },
@@ -39,7 +39,7 @@ export default function About() {
             scale: 1,
             rotate: 0,
             transition: {
-                type: "spring",
+                type: "spring" as const,
                 stiffness: 100,
                 damping: 20,
                 duration: 0.8,
@@ -53,7 +53,7 @@ export default function About() {
             opacity: 1,
             scale: 1,
             transition: {
-                type: "spring",
+                type: "spring" as const,
                 stiffness: 200,
                 damping: 15,
                 delay: 0.6 + i * 0.1,
@@ -71,7 +71,7 @@ export default function About() {
         <section
             id="about"
             ref={sectionRef}
-            className="py-24 bg-nude/30 relative overflow-hidden"
+            className="scroll-snap-section py-24 bg-nude/30 relative overflow-hidden"
         >
             {/* Animated decorative shapes */}
             <motion.div
