@@ -100,7 +100,7 @@ export default function Projects() {
                                             rotate: 0,
                                             opacity: 0
                                         }}
-                                        animate={isDrawerHovered ? {
+                                        animate={(isDrawerHovered && !isDrawerOpen) ? {
                                             x: `calc(-50% + ${(index - 1) * 40}px)`,
                                             y: -20,
                                             rotate: (index - 1) * 12,
