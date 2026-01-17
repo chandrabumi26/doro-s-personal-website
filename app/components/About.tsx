@@ -206,7 +206,7 @@ export default function About() {
                             variants={itemVariants}
                             className="text-charcoal/70 text-lg leading-relaxed"
                         >
-                            When I'm not coding, you'll find me exploring new design trends,
+                            When I&apos;m not coding, you&apos;ll find me exploring new design trends,
                             experimenting with animations, or enjoying a good cup of coffee
                             while sketching UI ideas.
                         </motion.p>
