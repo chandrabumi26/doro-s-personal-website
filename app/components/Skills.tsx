@@ -60,7 +60,7 @@ export default function Skills() {
                             >
                                 {/* Gradient overlay on hover */}
                                 <div
-                                    className={`absolute inset-0 bg-gradient-to-br ${skill.color} opacity-0 group-hover:opacity-5 transition-opacity duration-300`}
+                                    className={`absolute inset-0 bg-linear-to-br ${skill.color} opacity-0 group-hover:opacity-5 transition-opacity duration-300`}
                                 />
 
                                 {/* Icon */}
@@ -94,7 +94,7 @@ export default function Skills() {
                                 </ul>
 
                                 {/* Decorative corner */}
-                                <div className="absolute -bottom-2 -right-2 w-12 h-12 bg-gradient-to-br from-nude/50 to-transparent rounded-tl-2xl" />
+                                <div className="absolute -bottom-2 -right-2 w-12 h-12 bg-linear-to-br from-nude/50 to-transparent rounded-tl-2xl" />
                             </motion.div>
                         </ScrollReveal>
                     ))}

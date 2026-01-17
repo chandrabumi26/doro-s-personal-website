@@ -87,7 +87,7 @@ export default function Projects() {
                         <div className="relative">
                             {/* Documents peeking out from folder on hover - positioned ABOVE folder */}
                             <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-96 h-40 pointer-events-none z-20">
-                                {!isDrawerOpen && previewDocs.map((doc, index) => (
+                                {previewDocs.map((doc, index) => (
                                     <motion.div
                                         key={doc.id}
                                         className="absolute bottom-0 left-1/2 origin-bottom"
@@ -100,7 +100,7 @@ export default function Projects() {
                                             rotate: 0,
                                             opacity: 0
                                         }}
-                                        animate={(isDrawerHovered && !isDrawerOpen) ? {
+                                        animate={(isDrawerHovered) ? {
                                             x: `calc(-50% + ${(index - 1) * 40}px)`,
                                             y: -20,
                                             rotate: (index - 1) * 12,
@@ -140,7 +140,11 @@ export default function Projects() {
                             {/* Folder with hover detection */}
                             <motion.div
                                 className="relative cursor-pointer z-10"
-                                onClick={() => setIsDrawerOpen(!isDrawerOpen)}
+                                onClick={() => {
+                                    setIsDrawerOpen(!isDrawerOpen);
+                                    if (isDrawerOpen) setIsDrawerHovered(true);
+                                    else setIsDrawerHovered(false);
+                                }}
                                 onMouseEnter={() => setIsDrawerHovered(true)}
                                 onMouseLeave={() => setIsDrawerHovered(false)}
                                 whileTap={{ scale: 0.995 }}
@@ -183,7 +187,7 @@ export default function Projects() {
                                 >
                                     {/* Folder shine effect */}
                                     <motion.div
-                                        className="absolute top-0 left-0 right-0 h-1/4 bg-gradient-to-b from-white/30 to-transparent pointer-events-none"
+                                        className="absolute top-0 left-0 right-0 h-1/4 bg-linear-to-b from-white/30 to-transparent pointer-events-none"
                                         animate={{
                                             opacity: isDrawerHovered ? 0.5 : 0.3,
                                         }}
@@ -311,7 +315,7 @@ export default function Projects() {
                                                     animate={{
                                                         scale: hoveredProject === project.id ? 1.1 : 1,
                                                     }}
-                                                    className={`flex-shrink-0 w-20 h-20 ${project.color} rounded-xl flex items-center justify-center text-4xl shadow-lg`}
+                                                    className={`shrink-0 w-20 h-20 ${project.color} rounded-xl flex items-center justify-center text-4xl shadow-lg`}
                                                 >
                                                     {project.image}
                                                 </motion.div>

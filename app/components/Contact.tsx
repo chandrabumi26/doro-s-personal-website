@@ -80,7 +80,7 @@ export default function Contact() {
                 <ScrollReveal delay={0.2}>
                     <motion.div
                         whileHover={{ y: -4 }}
-                        className="relative bg-gradient-to-br from-cream to-nude/50 rounded-3xl p-8 md:p-12 shadow-xl border border-nude-warm/20 overflow-hidden"
+                        className="relative bg-linear-to-br from-cream to-nude/50 rounded-3xl p-8 md:p-12 shadow-xl border border-nude-warm/20 overflow-hidden"
                     >
                         {/* Decorative corner */}
                         <div className="absolute -top-10 -right-10 w-32 h-32 bg-tosca/10 rounded-full blur-2xl" />

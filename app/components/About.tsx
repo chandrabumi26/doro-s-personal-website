@@ -102,7 +102,7 @@ export default function About() {
                     <motion.div variants={imageVariants} className="relative group">
                         {/* Animated background frames */}
                         <motion.div
-                            className="absolute -inset-4 bg-gradient-to-br from-tosca/20 to-peach/20 rounded-3xl"
+                            className="absolute -inset-4 bg-linear-to-br from-tosca/20 to-peach/20 rounded-3xl"
                             animate={{
                                 rotate: [3, 5, 3],
                                 scale: [1, 1.02, 1],
@@ -110,7 +110,7 @@ export default function About() {
                             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
                         />
                         <motion.div
-                            className="absolute -inset-4 bg-gradient-to-br from-nude-warm/30 to-sage/20 rounded-3xl"
+                            className="absolute -inset-4 bg-linear-to-br from-nude-warm/30 to-sage/20 rounded-3xl"
                             animate={{
                                 rotate: [-2, -4, -2],
                                 scale: [1, 1.01, 1],
@@ -120,7 +120,7 @@ export default function About() {
 
                         {/* Main image container */}
                         <motion.div
-                            className="relative bg-gradient-to-br from-cream to-nude rounded-2xl aspect-square flex items-center justify-center overflow-hidden shadow-xl"
+                            className="relative bg-linear-to-br from-cream to-nude rounded-2xl aspect-square flex items-center justify-center overflow-hidden shadow-xl"
                             whileHover={{
                                 scale: 1.02,
                                 rotate: 1,

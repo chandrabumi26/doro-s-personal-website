@@ -67,9 +67,9 @@ export default function Footer() {
     const currentYear = new Date().getFullYear();
 
     return (
-        <footer className="scroll-snap-section relative bg-gradient-to-b from-charcoal to-charcoal/95 text-soft-white overflow-hidden">
+        <footer className="scroll-snap-section relative bg-linear-to-b from-charcoal to-charcoal/95 text-soft-white overflow-hidden">
             {/* Decorative top wave */}
-            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-tosca/50 to-transparent" />
+            <div className="absolute top-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-tosca/50 to-transparent" />
 
             {/* Decorative blurs */}
             <div className="absolute top-10 left-1/4 w-48 h-48 bg-tosca/5 rounded-full blur-3xl" />
@@ -147,7 +147,7 @@ export default function Footer() {
                 </div>
 
                 {/* Divider */}
-                <div className="h-px bg-gradient-to-r from-transparent via-soft-white/10 to-transparent mb-8" />
+                <div className="h-px bg-linear-to-r from-transparent via-soft-white/10 to-transparent mb-8" />
 
                 {/* Bottom bar */}
                 <div className="flex flex-col md:flex-row items-center justify-between gap-4">
