@@ -3,52 +3,36 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import ScrollReveal from "./ScrollReveal";
+import ProjectModal, { ProjectData } from "./ProjectModal";
+import Image from "next/image";
 
-const projects = [
+const projects: ProjectData[] = [
     {
         id: 1,
-        title: "E-Commerce Platform",
+        title: "E-Procurement Platform",
+        company: "Mbizmarket.co.id",
+        role: "Frontend Developer",
+        period: "2024 - Present",
         description:
-            "A modern e-commerce solution built with Next.js and TypeScript. Features include real-time inventory, secure payments, and responsive design.",
-        image: "🛒",
-        tags: ["Next.js", "TypeScript", "Tailwind"],
-        color: "bg-tosca",
-    },
-    {
-        id: 2,
-        title: "Dashboard Analytics",
-        description:
-            "Interactive dashboard for data visualization with real-time updates. Built using React and D3.js for stunning charts.",
-        image: "📊",
-        tags: ["React", "D3.js", "REST API"],
-        color: "bg-sage",
-    },
-    {
-        id: 3,
-        title: "Social Media App",
-        description:
-            "Full-featured social platform with real-time messaging, posts, and notifications. Vue.js frontend with GraphQL backend.",
-        image: "💬",
-        tags: ["Vue.js", "GraphQL", "WebSocket"],
-        color: "bg-terracotta",
-    },
-    {
-        id: 4,
-        title: "Portfolio Generator",
-        description:
-            "A tool that helps developers create stunning portfolios in minutes. Built with React and includes multiple themes.",
-        image: "✨",
-        tags: ["React", "TypeScript", "SCSS"],
-        color: "bg-nude-warm",
-    },
-    {
-        id: 5,
-        title: "Weather Application",
-        description:
-            "Beautiful weather app with location-based forecasts, animated weather icons, and 7-day predictions.",
-        image: "🌤️",
-        tags: ["React", "API Integration", "CSS"],
-        color: "bg-tosca-light",
+            "Mbizmarket is an e-procurement platform based on marketplace concept, primarily used by local governments for goods procurement. The platform provides a comprehensive solution for managing procurement processes, from product discovery to transaction completion.",
+        logo: "/projects/mbizmarket/logo.png",
+        screenshots: [
+            "/projects/mbizmarket/screenshot-1.png",
+            "/projects/mbizmarket/screenshot-2.png",
+            "/projects/mbizmarket/screenshot-3.png",
+        ],
+        tags: ["Next.js", "React.js", "TypeScript", "Tailwind CSS", "PHP", "Phalcon Framework", "GIT"],
+        highlights: [
+            "Revamped legacy PHP modules into modern Next.js architecture",
+            "Implemented government-related integrations (INAPROC, LKPP)",
+            "Enhanced tax and transaction workflows for compliance",
+            "Improved company profile management features",
+            "Strengthened system reliability through error tracking",
+            "Refactored outdated dependencies for better maintainability",
+            "Migrated projects to Next.js App Router for improved performance",
+        ],
+        color: "bg-tosca/20",
+        link: "https://mbizmarket.co.id",
     },
 ];
 
@@ -59,6 +43,7 @@ export default function Projects() {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const [isDrawerHovered, setIsDrawerHovered] = useState(false);
     const [hoveredProject, setHoveredProject] = useState<number | null>(null);
+    const [selectedProject, setSelectedProject] = useState<ProjectData | null>(null);
 
 
     return (
@@ -130,8 +115,10 @@ export default function Projects() {
                                                 <div className="w-full h-1.5 bg-charcoal/10 rounded" />
                                                 <div className="w-4/5 h-1.5 bg-charcoal/10 rounded" />
                                             </div>
-                                            {/* Document icon */}
-                                            <div className="text-xl text-center mt-2">{doc.image}</div>
+                                            {/* Company logo */}
+                                            <div className="mt-2 flex justify-center">
+                                                <Image src={doc.logo} alt={doc.company} width={48} height={24} className="object-contain" />
+                                            </div>
                                         </div>
                                     </motion.div>
                                 ))}
@@ -283,7 +270,8 @@ export default function Projects() {
                                         }}
                                         onMouseEnter={() => setHoveredProject(project.id)}
                                         onMouseLeave={() => setHoveredProject(null)}
-                                        className="relative group"
+                                        onClick={() => setSelectedProject(project)}
+                                        className="relative group cursor-pointer"
                                     >
                                         {/* Paper shadow */}
                                         <div className="absolute inset-0 bg-charcoal/10 rounded-lg translate-x-2 translate-y-2 group-hover:translate-x-3 group-hover:translate-y-3 transition-transform duration-300" />
@@ -310,14 +298,14 @@ export default function Projects() {
 
                                             {/* Content */}
                                             <div className="flex gap-6 ml-8">
-                                                {/* Project Icon */}
+                                                {/* Project Logo */}
                                                 <motion.div
                                                     animate={{
                                                         scale: hoveredProject === project.id ? 1.1 : 1,
                                                     }}
-                                                    className={`shrink-0 w-20 h-20 ${project.color} rounded-xl flex items-center justify-center text-4xl shadow-lg`}
+                                                    className={`shrink-0 w-20 h-20 ${project.color} rounded-xl flex items-center justify-center shadow-lg p-2`}
                                                 >
-                                                    {project.image}
+                                                    <Image src={project.logo} alt={project.company} width={64} height={64} className="object-contain" />
                                                 </motion.div>
 
                                                 {/* Project Info */}
@@ -348,6 +336,13 @@ export default function Projects() {
                     )}
                 </AnimatePresence>
             </div>
+
+            {/* Project Modal */}
+            <ProjectModal
+                project={selectedProject}
+                isOpen={selectedProject !== null}
+                onClose={() => setSelectedProject(null)}
+            />
         </section>
     );
 }
