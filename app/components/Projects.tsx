@@ -9,7 +9,7 @@ import Image from "next/image";
 const projects: ProjectData[] = [
     {
         id: 1,
-        title: "E-Procurement Platform",
+        title: "Mbizmarket",
         company: "Mbizmarket.co.id",
         role: "Frontend Developer",
         period: "2024 - Present",
@@ -33,6 +33,56 @@ const projects: ProjectData[] = [
         ],
         color: "bg-tosca/20",
         link: "https://mbizmarket.co.id",
+    },
+    {
+        id: 2,
+        title: "MLDSpot",
+        company: "Djarum Super MLD",
+        role: "Frontend Developer",
+        period: "2022 - 2023",
+        description:
+            "MLDSpot is a points redemption website for Djarum Super MLD consumers. Users can claim MLDPOINTS by submitting their purchase receipt reference numbers and uploading receipt photos from retail stores like Indomaret. The accumulated points can then be redeemed for exclusive merchandise and rewards.",
+        logo: "/projects/mldspot-logo.png",
+        screenshots: [
+            "/projects/mldspot-1.png",
+            "/projects/mldspot-2.png",
+            "/projects/mldspot-3.png",
+        ],
+        tags: ["Vue.js", "JavaScript", "SCSS", "Laravel"],
+        highlights: [
+            "Improved data transfer speed from microservices",
+            "Built receipt photo upload and verification workflow",
+            "Developed points claiming system with transaction code validation",
+            "Implemented leaderboard system for user engagement",
+            "Created responsive member dashboard interface",
+        ],
+        color: "bg-red-100",
+        link: "https://www.mldspot.com/",
+    },
+    {
+        id: 3,
+        title: "Retinad",
+        company: "Retinad",
+        role: "Frontend Developer",
+        period: "2021 - 2022",
+        description:
+            "Retinad is a WiFi advertising platform that delivers ads through WiFi login portals. Established since 2018, the platform features a web-based management system. Due to the legacy technology (CodeIgniter) being inefficient for further development, the system was modernized to support microservices architecture and Test-Driven Development on both backend and frontend.",
+        logo: "/projects/retinad-logo.png",
+        screenshots: [
+            "/projects/retinad-1.png",
+            "/projects/retinad-2.png",
+            "/projects/retinad-3.png",
+        ],
+        tags: ["Laravel", "Vue.js", "jQuery", "SCSS"],
+        highlights: [
+            "Migrated legacy CodeIgniter system to modern Laravel architecture",
+            "Built WiFi login portal ad template builder",
+            "Implemented theme management system for venues",
+            "Developed billing and package management features",
+            "Created activity tracking and analytics dashboard",
+        ],
+        color: "bg-[#d8137b]",
+        link: "https://www.retinad.com/",
     },
 ];
 

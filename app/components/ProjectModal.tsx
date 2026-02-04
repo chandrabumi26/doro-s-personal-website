@@ -30,14 +30,16 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
     const [direction, setDirection] = useState(0);
     // Cache project data so it persists during exit animation
     const [displayedProject, setDisplayedProject] = useState<ProjectData | null>(null);
+    // Track the previous project ID to detect changes
+    const [prevProjectId, setPrevProjectId] = useState<number | null>(null);
 
-    // Update displayed project when a new project is passed in
-    useEffect(() => {
-        if (project) {
-            setDisplayedProject(project);
-            setCurrentImageIndex(0);
-        }
-    }, [project]);
+    // React-recommended pattern: adjust state during render based on props
+    // See: https://react.dev/learn/you-might-not-need-an-effect#adjusting-some-state-when-a-prop-changes
+    if (project && project.id !== prevProjectId) {
+        setPrevProjectId(project.id);
+        setDisplayedProject(project);
+        setCurrentImageIndex(0);
+    }
 
     const nextImage = useCallback(() => {
         if (!displayedProject) return;
@@ -272,7 +274,7 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
                                         initial={{ scale: 0, rotate: -180 }}
                                         animate={{ scale: 1, rotate: 0 }}
                                         transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-                                        className="shrink-0 w-16 h-16 md:w-20 md:h-20 bg-soft-white rounded-xl shadow-lg p-2 flex items-center justify-center"
+                                        className={`shrink-0 w-16 h-16 md:w-20 md:h-20 ${displayedProject.color} rounded-xl shadow-lg p-2 flex items-center justify-center`}
                                     >
                                         <Image
                                             src={displayedProject.logo}
@@ -372,7 +374,7 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
                                                 animate={{ opacity: 1, scale: 1 }}
                                                 transition={{ delay: 0.45 + index * 0.03 }}
                                                 whileHover={{ scale: 1.05, y: -2 }}
-                                                className={`px-4 py-2 rounded-full text-sm font-medium ${displayedProject.color} text-charcoal shadow-sm`}
+                                                className="px-4 py-2 rounded-full text-sm font-medium bg-nude/50 text-charcoal shadow-sm"
                                             >
                                                 {tag}
                                             </motion.span>
