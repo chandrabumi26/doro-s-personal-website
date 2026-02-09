@@ -36,6 +36,34 @@ const projects: ProjectData[] = [
     },
     {
         id: 2,
+        title: "BUMA Internal Apps",
+        company: "PT. Bukit Makmur Mandiri Utama",
+        role: "Frontend Developer",
+        period: "2023 - 2024",
+        description:
+            "Developed and maintained internal applications supporting procurement, inventory, and pricing workflows at BUMA (PT. Bukit Makmur Mandiri Utama), one of Indonesia's largest coal mining contractors. Built scalable solutions using Vue.js 3, Vuex, and TypeScript in an Agile environment, leveraging micro front-end architecture for modular systems.",
+        logo: "/projects/buma/logo.png",
+        screenshots: [
+            "/projects/buma/screenshot-1.png",
+            "/projects/buma/screenshot-2.png",
+            "/projects/buma/screenshot-3.png",
+            "/projects/buma/screenshot-4.png",
+            "/projects/buma/screenshot-5.png",
+            "/projects/buma/screenshot-6.png",
+        ],
+        tags: ["Vue.js", "TypeScript", "SCSS", "Azure DevOps", "GIT"],
+        highlights: [
+            "Transformed SAP MIGO transactions into a modern web application",
+            "Created an inventory monitoring dashboard for real-time tracking",
+            "Delivered a price list management application with upload/validation features",
+            "Developed procurement contract management and reporting system",
+            "Implemented micro front-end architecture for modular and maintainable systems",
+            "Enhanced operational efficiency and system accessibility across the organization",
+        ],
+        color: "bg-green-100",
+    },
+    {
+        id: 3,
         title: "MLDSpot",
         company: "Djarum Super MLD",
         role: "Frontend Developer",
@@ -60,7 +88,7 @@ const projects: ProjectData[] = [
         link: "https://www.mldspot.com/",
     },
     {
-        id: 3,
+        id: 4,
         title: "Retinad",
         company: "Retinad",
         role: "Frontend Developer",
