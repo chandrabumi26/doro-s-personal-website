@@ -1,12 +1,13 @@
 "use client";
 
 import { motion, useInView } from "motion/react";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
 
 export default function About() {
     const sectionRef = useRef(null);
     const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
+    const [isFlipped, setIsFlipped] = useState(false);
 
     const containerVariants = {
         hidden: { opacity: 0 },
@@ -62,7 +63,8 @@ export default function About() {
     };
 
     const stats = [
-        { icon: "🚀", value: "50+", label: "Projects" },
+        { icon: "🎮", value: "Pokémon", label: "Trainer" },
+        { icon: "🤖", value: "Gundam", label: "Builder" },
         { icon: "⭐", value: "4+", label: "Years Exp." },
         { icon: "☕", value: "∞", label: "Coffee" },
     ];
@@ -118,50 +120,82 @@ export default function About() {
                             transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
                         />
 
-                        {/* Main image container */}
-                        <motion.div
-                            className="relative bg-linear-to-br from-cream to-nude rounded-2xl aspect-square flex items-center justify-center overflow-hidden shadow-xl"
-                            whileHover={{
-                                scale: 1.02,
-                                rotate: 1,
-                                transition: { type: "spring", stiffness: 300 },
-                            }}
+                        {/* Main image container with flip effect */}
+                        <div 
+                            className="relative aspect-square cursor-pointer"
+                            style={{ perspective: "1000px" }}
+                            onMouseEnter={() => setIsFlipped(true)}
+                            onMouseLeave={() => setIsFlipped(false)}
                         >
-                            <Image
-                                src="/profile.png"
-                                alt="Dorojatun Chandrabumi"
-                                width={400}
-                                height={400}
-                                className="object-contain p-4"
-                                priority
-                            />
+                            <motion.div
+                                className="relative w-full h-full"
+                                animate={{ rotateY: isFlipped ? 180 : 0 }}
+                                transition={{ duration: 0.6, ease: "easeInOut" }}
+                                style={{ transformStyle: "preserve-3d" }}
+                            >
+                                {/* Front - Pixel Art */}
+                                <div 
+                                    className="absolute inset-0 bg-linear-to-br from-cream to-nude rounded-2xl flex items-center justify-center overflow-hidden shadow-xl"
+                                    style={{ backfaceVisibility: "hidden" }}
+                                >
+                                    <Image
+                                        src="/profile.png"
+                                        alt="Dorojatun Chandrabumi - Pixel Art"
+                                        width={400}
+                                        height={400}
+                                        className="object-contain p-4"
+                                        priority
+                                    />
 
-                            {/* Floating decorative elements */}
-                            <motion.div
-                                className="absolute top-4 left-4 w-8 h-8 border-2 border-tosca/30 rounded-full"
-                                animate={{
-                                    y: [0, -10, 0],
-                                    opacity: [0.3, 0.6, 0.3],
-                                }}
-                                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                            />
-                            <motion.div
-                                className="absolute bottom-6 right-6 w-12 h-12 border-2 border-peach/40 rounded-full"
-                                animate={{
-                                    y: [0, 10, 0],
-                                    opacity: [0.4, 0.7, 0.4],
-                                }}
-                                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                            />
-                            <motion.div
-                                className="absolute top-1/2 right-4 w-4 h-4 bg-tosca/30 rounded-full"
-                                animate={{
-                                    scale: [1, 1.5, 1],
-                                    opacity: [0.3, 0.6, 0.3],
-                                }}
-                                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-                            />
-                        </motion.div>
+                                    {/* Floating decorative elements */}
+                                    <motion.div
+                                        className="absolute top-4 left-4 w-8 h-8 border-2 border-tosca/30 rounded-full"
+                                        animate={{
+                                            y: [0, -10, 0],
+                                            opacity: [0.3, 0.6, 0.3],
+                                        }}
+                                        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                                    />
+                                    <motion.div
+                                        className="absolute bottom-6 right-6 w-12 h-12 border-2 border-peach/40 rounded-full"
+                                        animate={{
+                                            y: [0, 10, 0],
+                                            opacity: [0.4, 0.7, 0.4],
+                                        }}
+                                        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                                    />
+                                    <motion.div
+                                        className="absolute top-1/2 right-4 w-4 h-4 bg-tosca/30 rounded-full"
+                                        animate={{
+                                            scale: [1, 1.5, 1],
+                                            opacity: [0.3, 0.6, 0.3],
+                                        }}
+                                        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+                                    />
+                                </div>
+
+                                {/* Back - Real Photo */}
+                                <div 
+                                    className="absolute inset-0 bg-linear-to-br from-charcoal to-charcoal/90 rounded-2xl flex items-center justify-center overflow-hidden shadow-xl"
+                                    style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
+                                >
+                                    <Image
+                                        src="/profile-real.jpg"
+                                        alt="Dorojatun Chandrabumi"
+                                        fill
+                                        sizes="(max-width: 768px) 100vw, 400px"
+                                        quality={100}
+                                        className="object-cover"
+                                        priority
+                                    />
+                                    {/* Overlay gradient */}
+                                    <div className="absolute inset-0 bg-linear-to-t from-charcoal/50 to-transparent" />
+                                    <div className="absolute bottom-4 left-4 text-soft-white">
+                                        <p className="text-sm font-medium opacity-80">The real me 👋</p>
+                                    </div>
+                                </div>
+                            </motion.div>
+                        </div>
                     </motion.div>
 
                     {/* Content */}
@@ -206,9 +240,9 @@ export default function About() {
                             variants={itemVariants}
                             className="text-charcoal/70 text-lg leading-relaxed"
                         >
-                            When I&apos;m not coding, you&apos;ll find me exploring new design trends,
-                            experimenting with animations, or enjoying a good cup of coffee
-                            while sketching UI ideas.
+                            When I&apos;m not coding, you&apos;ll find me exploring new things,
+                            diving deep into fascinating topics like World War II history,
+                            Chernobyl, and other intriguing stories from the past.
                         </motion.p>
 
                         {/* Stats */}

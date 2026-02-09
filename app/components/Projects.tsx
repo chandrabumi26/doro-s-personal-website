@@ -3,52 +3,140 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import ScrollReveal from "./ScrollReveal";
+import ProjectModal, { ProjectData } from "./ProjectModal";
+import Image from "next/image";
 
-const projects = [
+const projects: ProjectData[] = [
     {
         id: 1,
-        title: "E-Commerce Platform",
+        title: "Mbizmarket",
+        company: "Mbizmarket.co.id",
+        role: "Frontend Developer",
+        period: "2024 - Present",
         description:
-            "A modern e-commerce solution built with Next.js and TypeScript. Features include real-time inventory, secure payments, and responsive design.",
-        image: "🛒",
-        tags: ["Next.js", "TypeScript", "Tailwind"],
-        color: "bg-tosca",
+            "Mbizmarket is an e-procurement platform based on marketplace concept, primarily used by local governments for goods procurement. The platform provides a comprehensive solution for managing procurement processes, from product discovery to transaction completion.",
+        logo: "/projects/mbizmarket/logo.png",
+        screenshots: [
+            "/projects/mbizmarket/screenshot-1.png",
+            "/projects/mbizmarket/screenshot-2.png",
+            "/projects/mbizmarket/screenshot-3.png",
+        ],
+        tags: ["Next.js", "React.js", "TypeScript", "Tailwind CSS", "PHP", "Phalcon Framework", "GIT"],
+        highlights: [
+            "Revamped legacy PHP modules into modern Next.js architecture",
+            "Implemented government-related integrations (INAPROC, LKPP)",
+            "Enhanced tax and transaction workflows for compliance",
+            "Improved company profile management features",
+            "Strengthened system reliability through error tracking",
+            "Refactored outdated dependencies for better maintainability",
+            "Migrated projects to Next.js App Router for improved performance",
+        ],
+        color: "bg-tosca/20",
+        link: "https://mbizmarket.co.id",
     },
     {
         id: 2,
-        title: "Dashboard Analytics",
+        title: "BUMA Internal Apps",
+        company: "PT. Bukit Makmur Mandiri Utama",
+        role: "Frontend Developer",
+        period: "2023 - 2024",
         description:
-            "Interactive dashboard for data visualization with real-time updates. Built using React and D3.js for stunning charts.",
-        image: "📊",
-        tags: ["React", "D3.js", "REST API"],
-        color: "bg-sage",
+            "Developed and maintained internal applications supporting procurement, inventory, and pricing workflows at BUMA (PT. Bukit Makmur Mandiri Utama), one of Indonesia's largest coal mining contractors. Built scalable solutions using Vue.js 3, Vuex, and TypeScript in an Agile environment, leveraging micro front-end architecture for modular systems.",
+        logo: "/projects/buma/logo.png",
+        screenshots: [
+            "/projects/buma/screenshot-1.png",
+            "/projects/buma/screenshot-2.png",
+            "/projects/buma/screenshot-3.png",
+            "/projects/buma/screenshot-4.png",
+            "/projects/buma/screenshot-5.png",
+            "/projects/buma/screenshot-6.png",
+        ],
+        tags: ["Vue.js", "TypeScript", "SCSS", "Azure DevOps", "GIT"],
+        highlights: [
+            "Transformed SAP MIGO transactions into a modern web application",
+            "Created an inventory monitoring dashboard for real-time tracking",
+            "Delivered a price list management application with upload/validation features",
+            "Developed procurement contract management and reporting system",
+            "Implemented micro front-end architecture for modular and maintainable systems",
+            "Enhanced operational efficiency and system accessibility across the organization",
+        ],
+        color: "bg-green-100",
     },
     {
         id: 3,
-        title: "Social Media App",
+        title: "MLDSpot",
+        company: "Djarum Super MLD",
+        role: "Frontend Developer",
+        period: "2022 - 2023",
         description:
-            "Full-featured social platform with real-time messaging, posts, and notifications. Vue.js frontend with GraphQL backend.",
-        image: "💬",
-        tags: ["Vue.js", "GraphQL", "WebSocket"],
-        color: "bg-terracotta",
+            "MLDSpot is a points redemption website for Djarum Super MLD consumers. Users can claim MLDPOINTS by submitting their purchase receipt reference numbers and uploading receipt photos from retail stores like Indomaret. The accumulated points can then be redeemed for exclusive merchandise and rewards.",
+        logo: "/projects/mldspot-logo.png",
+        screenshots: [
+            "/projects/mldspot-1.png",
+            "/projects/mldspot-2.png",
+            "/projects/mldspot-3.png",
+        ],
+        tags: ["Vue.js", "JavaScript", "SCSS", "Laravel"],
+        highlights: [
+            "Improved data transfer speed from microservices",
+            "Built receipt photo upload and verification workflow",
+            "Developed points claiming system with transaction code validation",
+            "Implemented leaderboard system for user engagement",
+            "Created responsive member dashboard interface",
+        ],
+        color: "bg-red-100",
+        link: "https://www.mldspot.com/",
     },
     {
         id: 4,
-        title: "Portfolio Generator",
+        title: "Retinad",
+        company: "Retinad",
+        role: "Frontend Developer",
+        period: "2021 - 2022",
         description:
-            "A tool that helps developers create stunning portfolios in minutes. Built with React and includes multiple themes.",
-        image: "✨",
-        tags: ["React", "TypeScript", "SCSS"],
-        color: "bg-nude-warm",
+            "Retinad is a WiFi advertising platform that delivers ads through WiFi login portals. Established since 2018, the platform features a web-based management system. Due to the legacy technology (CodeIgniter) being inefficient for further development, the system was modernized to support microservices architecture and Test-Driven Development on both backend and frontend.",
+        logo: "/projects/retinad-logo.png",
+        screenshots: [
+            "/projects/retinad-1.png",
+            "/projects/retinad-2.png",
+            "/projects/retinad-3.png",
+        ],
+        tags: ["Laravel", "Vue.js", "jQuery", "SCSS"],
+        highlights: [
+            "Migrated legacy CodeIgniter system to modern Laravel architecture",
+            "Built WiFi login portal ad template builder",
+            "Implemented theme management system for venues",
+            "Developed billing and package management features",
+            "Created activity tracking and analytics dashboard",
+        ],
+        color: "bg-[#d8137b]",
+        link: "https://www.retinad.com/",
     },
     {
         id: 5,
-        title: "Weather Application",
+        title: "SysLaw Partner",
+        company: "SYS Law Office",
+        role: "Frontend Developer",
+        period: "2024",
         description:
-            "Beautiful weather app with location-based forecasts, animated weather icons, and 7-day predictions.",
-        image: "🌤️",
-        tags: ["React", "API Integration", "CSS"],
-        color: "bg-tosca-light",
+            "Designed and developed a responsive law firm company profile website to present firm information, services, and brand identity. Collaborated closely with a UI/UX designer to translate design concepts into a polished, production-ready web experience. Responsibilities included frontend development, performance optimization, and deployment. The website was deployed on Vercel and configured with a custom domain to ensure reliable hosting and smooth delivery for the client.",
+        logo: "/projects/syslawnpartner/logo.png",
+        screenshots: [
+            "/projects/syslawnpartner/screenshot-1.png",
+            "/projects/syslawnpartner/screenshot-2.png",
+            "/projects/syslawnpartner/screenshot-3.png",
+        ],
+        tags: ["Next.js", "React.js", "Tailwind CSS"],
+        highlights: [
+            "Built responsive law firm company profile website",
+            "Collaborated with UI/UX designer to implement design concepts",
+            "Developed frontend with Next.js and React.js",
+            "Implemented Tailwind CSS for modern, maintainable styling",
+            "Optimized performance for fast page load times",
+            "Deployed on Vercel with custom domain configuration",
+        ],
+        color: "bg-[#1a365d]",
+        link: "https://syslawnpartner.com/",
     },
 ];
 
@@ -59,6 +147,7 @@ export default function Projects() {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const [isDrawerHovered, setIsDrawerHovered] = useState(false);
     const [hoveredProject, setHoveredProject] = useState<number | null>(null);
+    const [selectedProject, setSelectedProject] = useState<ProjectData | null>(null);
 
 
     return (
@@ -130,8 +219,10 @@ export default function Projects() {
                                                 <div className="w-full h-1.5 bg-charcoal/10 rounded" />
                                                 <div className="w-4/5 h-1.5 bg-charcoal/10 rounded" />
                                             </div>
-                                            {/* Document icon */}
-                                            <div className="text-xl text-center mt-2">{doc.image}</div>
+                                            {/* Company logo */}
+                                            <div className="mt-2 flex justify-center">
+                                                <Image src={doc.logo} alt={doc.company} width={48} height={24} className="object-contain" />
+                                            </div>
                                         </div>
                                     </motion.div>
                                 ))}
@@ -283,7 +374,8 @@ export default function Projects() {
                                         }}
                                         onMouseEnter={() => setHoveredProject(project.id)}
                                         onMouseLeave={() => setHoveredProject(null)}
-                                        className="relative group"
+                                        onClick={() => setSelectedProject(project)}
+                                        className="relative group cursor-pointer"
                                     >
                                         {/* Paper shadow */}
                                         <div className="absolute inset-0 bg-charcoal/10 rounded-lg translate-x-2 translate-y-2 group-hover:translate-x-3 group-hover:translate-y-3 transition-transform duration-300" />
@@ -310,14 +402,14 @@ export default function Projects() {
 
                                             {/* Content */}
                                             <div className="flex gap-6 ml-8">
-                                                {/* Project Icon */}
+                                                {/* Project Logo */}
                                                 <motion.div
                                                     animate={{
                                                         scale: hoveredProject === project.id ? 1.1 : 1,
                                                     }}
-                                                    className={`shrink-0 w-20 h-20 ${project.color} rounded-xl flex items-center justify-center text-4xl shadow-lg`}
+                                                    className={`shrink-0 w-20 h-20 ${project.color} rounded-xl flex items-center justify-center shadow-lg p-2`}
                                                 >
-                                                    {project.image}
+                                                    <Image src={project.logo} alt={project.company} width={64} height={64} className="object-contain" />
                                                 </motion.div>
 
                                                 {/* Project Info */}
@@ -348,6 +440,13 @@ export default function Projects() {
                     )}
                 </AnimatePresence>
             </div>
+
+            {/* Project Modal */}
+            <ProjectModal
+                project={selectedProject}
+                isOpen={selectedProject !== null}
+                onClose={() => setSelectedProject(null)}
+            />
         </section>
     );
 }
