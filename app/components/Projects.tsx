@@ -112,6 +112,32 @@ const projects: ProjectData[] = [
         color: "bg-[#d8137b]",
         link: "https://www.retinad.com/",
     },
+    {
+        id: 5,
+        title: "SysLaw Partner",
+        company: "SYS Law Office",
+        role: "Frontend Developer",
+        period: "2024",
+        description:
+            "Designed and developed a responsive law firm company profile website to present firm information, services, and brand identity. Collaborated closely with a UI/UX designer to translate design concepts into a polished, production-ready web experience. Responsibilities included frontend development, performance optimization, and deployment. The website was deployed on Vercel and configured with a custom domain to ensure reliable hosting and smooth delivery for the client.",
+        logo: "/projects/syslawnpartner/logo.png",
+        screenshots: [
+            "/projects/syslawnpartner/screenshot-1.png",
+            "/projects/syslawnpartner/screenshot-2.png",
+            "/projects/syslawnpartner/screenshot-3.png",
+        ],
+        tags: ["Next.js", "React.js", "Tailwind CSS"],
+        highlights: [
+            "Built responsive law firm company profile website",
+            "Collaborated with UI/UX designer to implement design concepts",
+            "Developed frontend with Next.js and React.js",
+            "Implemented Tailwind CSS for modern, maintainable styling",
+            "Optimized performance for fast page load times",
+            "Deployed on Vercel with custom domain configuration",
+        ],
+        color: "bg-[#1a365d]",
+        link: "https://syslawnpartner.com/",
+    },
 ];
 
 // Preview documents that peek out on hover (first 3 projects)
