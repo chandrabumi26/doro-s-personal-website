@@ -57,7 +57,7 @@ const contactLinks = [
 
 export default function Contact() {
     return (
-        <section id="contact" className="scroll-snap-section py-24 bg-soft-white relative overflow-hidden">
+        <section id="contact" className="py-24 bg-soft-white relative overflow-hidden">
             {/* Decorative elements */}
             <div className="absolute top-1/3 left-0 w-72 h-72 bg-tosca/10 rounded-full blur-3xl" />
             <div className="absolute bottom-1/3 right-0 w-56 h-56 bg-peach/20 rounded-full blur-3xl" />
