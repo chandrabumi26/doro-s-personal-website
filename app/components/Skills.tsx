@@ -1,13 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import ScrollReveal from "./ScrollReveal";
 
 type TechItem = {
     name: string;
     color: string;
-    bgColor: string;
+    hexColor: string;
 };
 
 type TechGroup = {
@@ -27,18 +27,14 @@ const techGroups: TechGroup[] = [
         accentColor: "text-tosca",
         accentBg: "bg-tosca",
         items: [
-            { name: "React", color: "text-[#61DAFB]", bgColor: "bg-[#61DAFB]/10" },
-            { name: "Next.js", color: "text-charcoal", bgColor: "bg-charcoal/10" },
-            { name: "Vue.js", color: "text-[#42B883]", bgColor: "bg-[#42B883]/10" },
-            { name: "jQuery", color: "text-[#0769AD]", bgColor: "bg-[#0769AD]/10" },
-            { name: "TypeScript", color: "text-[#3178C6]", bgColor: "bg-[#3178C6]/10" },
-            { name: "JavaScript", color: "text-[#F7DF1E]", bgColor: "bg-[#F7DF1E]/10" },
-            { name: "HTML5", color: "text-[#E34F26]", bgColor: "bg-[#E34F26]/10" },
-            { name: "CSS3", color: "text-[#1572B6]", bgColor: "bg-[#1572B6]/10" },
-            { name: "Tailwind CSS", color: "text-[#06B6D4]", bgColor: "bg-[#06B6D4]/10" },
-            { name: "SCSS", color: "text-[#CC6699]", bgColor: "bg-[#CC6699]/10" },
-            { name: "Styled Components", color: "text-[#DB7093]", bgColor: "bg-[#DB7093]/10" },
-            { name: "CSS Modules", color: "text-charcoal", bgColor: "bg-charcoal/10" },
+            { name: "React", color: "text-[#61DAFB]", hexColor: "#61DAFB" },
+            { name: "Next.js", color: "text-charcoal", hexColor: "#3D3D3D" },
+            { name: "Vue.js", color: "text-[#42B883]", hexColor: "#42B883" },
+            { name: "TypeScript", color: "text-[#3178C6]", hexColor: "#3178C6" },
+            { name: "JavaScript", color: "text-[#F7DF1E]", hexColor: "#F7DF1E" },
+            { name: "jQuery", color: "text-[#0769AD]", hexColor: "#0769AD" },
+            { name: "Tailwind CSS", color: "text-[#06B6D4]", hexColor: "#06B6D4" },
+            { name: "SCSS", color: "text-[#CC6699]", hexColor: "#CC6699" },
         ],
     },
     {
@@ -48,11 +44,11 @@ const techGroups: TechGroup[] = [
         accentColor: "text-sage",
         accentBg: "bg-sage",
         items: [
-            { name: "PHP", color: "text-[#777BB4]", bgColor: "bg-[#777BB4]/10" },
-            { name: "Python", color: "text-[#3776AB]", bgColor: "bg-[#3776AB]/10" },
-            { name: "MySQL", color: "text-[#4479A1]", bgColor: "bg-[#4479A1]/10" },
-            { name: "PostgreSQL", color: "text-[#4169E1]", bgColor: "bg-[#4169E1]/10" },
-            { name: "REST APIs", color: "text-tosca-dark", bgColor: "bg-tosca/10" },
+            { name: "PHP", color: "text-[#777BB4]", hexColor: "#777BB4" },
+            { name: "Python", color: "text-[#3776AB]", hexColor: "#3776AB" },
+            { name: "MySQL", color: "text-[#4479A1]", hexColor: "#4479A1" },
+            { name: "PostgreSQL", color: "text-[#4169E1]", hexColor: "#4169E1" },
+            { name: "REST APIs", color: "text-tosca-dark", hexColor: "#4A9E9E" },
         ],
     },
     {
@@ -62,10 +58,62 @@ const techGroups: TechGroup[] = [
         accentColor: "text-peach",
         accentBg: "bg-peach",
         items: [
-            { name: "React Native", color: "text-[#61DAFB]", bgColor: "bg-[#61DAFB]/10" },
+            { name: "React Native", color: "text-[#61DAFB]", hexColor: "#61DAFB" },
         ],
     },
 ];
+
+// Deterministic pseudo-random based on string seed for consistent animation offsets
+function seededRandom(seed: string) {
+    let hash = 0;
+    for (let i = 0; i < seed.length; i++) {
+        const char = seed.charCodeAt(i);
+        hash = ((hash << 5) - hash) + char;
+        hash |= 0;
+    }
+    return Math.abs(hash % 100) / 100;
+}
+
+const tagStyle = {
+    padding: "px-5 py-2.5 sm:px-7 sm:py-3",
+    text: "text-sm sm:text-base font-semibold",
+    dot: "w-2 h-2",
+};
+
+// Floating particle component
+function FloatingParticle({ index, accentHex }: { index: number; accentHex: string }) {
+    const rand = seededRandom(`particle-${index}`);
+    const size = 3 + rand * 4;
+    const left = (index * 17 + rand * 30) % 100;
+    const top = (index * 23 + rand * 40) % 100;
+    const duration = 4 + rand * 6;
+    const delay = rand * 3;
+
+    return (
+        <motion.div
+            className="absolute rounded-full pointer-events-none"
+            style={{
+                width: size,
+                height: size,
+                left: `${left}%`,
+                top: `${top}%`,
+                backgroundColor: accentHex,
+                opacity: 0.15,
+            }}
+            animate={{
+                y: [0, -12, 0, 8, 0],
+                x: [0, 6, -4, 2, 0],
+                opacity: [0.1, 0.25, 0.1, 0.2, 0.1],
+            }}
+            transition={{
+                duration,
+                delay,
+                repeat: Infinity,
+                ease: "easeInOut",
+            }}
+        />
+    );
+}
 
 const growthItems = [
     { label: "Responsive Design", desc: "Building interfaces that adapt seamlessly across all screen sizes — from mobile to ultra-wide displays — ensuring a consistent user experience everywhere." },
@@ -79,6 +127,11 @@ const growthItems = [
 
 export default function Skills() {
     const [activeGroup, setActiveGroup] = useState(0);
+
+    // Generate stable particle positions per group
+    const particles = useMemo(() => {
+        return Array.from({ length: 12 }, (_, i) => i);
+    }, []);
 
     return (
         <section id="skills" className="scroll-snap-section py-24 bg-soft-white relative overflow-hidden">
@@ -145,7 +198,7 @@ export default function Skills() {
                         ))}
                     </div>
 
-                    {/* Active Group Content */}
+                    {/* Active Group Content — Floating Tag Cloud */}
                     <AnimatePresence mode="wait">
                         <motion.div
                             key={activeGroup}
@@ -154,53 +207,95 @@ export default function Skills() {
                             exit={{ opacity: 0, y: -20 }}
                             transition={{ duration: 0.3, ease: "easeInOut" }}
                         >
-                            <div className="relative bg-cream rounded-3xl p-6 sm:p-10 border border-nude/50 shadow-lg overflow-hidden">
-                                {/* Decorative top accent */}
-                                <div className={`absolute top-0 left-0 right-0 h-1.5 ${techGroups[activeGroup].accentBg} opacity-60`} />
+                            <div className="relative rounded-3xl p-8 sm:p-12 min-h-[220px] overflow-hidden"
+                                style={{
+                                    background: "linear-gradient(135deg, rgba(253,248,243,0.8) 0%, rgba(232,212,196,0.3) 50%, rgba(245,213,200,0.2) 100%)",
+                                    backdropFilter: "blur(20px)",
+                                    border: "1px solid rgba(232,212,196,0.4)",
+                                }}
+                            >
+                                {/* Background floating particles */}
+                                {particles.map((i) => (
+                                    <FloatingParticle
+                                        key={`${activeGroup}-${i}`}
+                                        index={i}
+                                        accentHex={techGroups[activeGroup].items[0]?.hexColor || "#5FBDBD"}
+                                    />
+                                ))}
 
-                                {/* Group header */}
-                                <div className="relative mb-8 text-center">
-                                    <h3 className="text-2xl font-bold text-charcoal mb-1">
-                                        {techGroups[activeGroup].title}
-                                    </h3>
-                                    <p className="text-charcoal/60 text-sm">
-                                        {techGroups[activeGroup].subtitle}
-                                    </p>
-                                </div>
+                                {/* Subtitle */}
+                                <motion.p
+                                    className="text-center text-charcoal/40 text-sm font-medium tracking-wider uppercase mb-8"
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    transition={{ delay: 0.15 }}
+                                >
+                                    {techGroups[activeGroup].subtitle}
+                                </motion.p>
 
-                                {/* Tech items grid - no icons, brand colors instead */}
-                                <div className="relative grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4">
-                                    {techGroups[activeGroup].items.map((item, itemIndex) => (
-                                        <motion.div
-                                            key={item.name}
-                                            initial={{ opacity: 0, scale: 0.8 }}
-                                            animate={{ opacity: 1, scale: 1 }}
-                                            transition={{
-                                                delay: itemIndex * 0.04,
-                                                type: "spring",
-                                                stiffness: 300,
-                                                damping: 20,
-                                            }}
-                                            whileHover={{
-                                                y: -6,
-                                                scale: 1.05,
-                                            }}
-                                            whileTap={{ scale: 0.95 }}
-                                            className={`
-                                                group relative ${item.bgColor} rounded-2xl p-4 sm:p-5 
-                                                border border-transparent hover:border-current
-                                                shadow-sm hover:shadow-lg transition-all duration-300 cursor-default
-                                                flex items-center justify-center text-center
-                                            `}
-                                        >
-                                            {/* Left accent bar */}
-                                            <div className={`absolute left-0 top-3 bottom-3 w-1 rounded-full ${item.bgColor.replace('/10', '/40')} group-hover:${item.bgColor.replace('/10', '')} transition-colors duration-300`} />
-                                            
-                                            <span className={`text-sm sm:text-base font-bold ${item.color} transition-colors duration-300`}>
-                                                {item.name}
-                                            </span>
-                                        </motion.div>
-                                    ))}
+                                {/* Floating tag cloud */}
+                                <div className="relative flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+                                    {techGroups[activeGroup].items.map((item, itemIndex) => {
+                                        const rand = seededRandom(item.name);
+                                        const floatDuration = 3 + rand * 4;
+                                        const floatDelay = rand * 2;
+                                        const floatY = 3 + rand * 5;
+
+                                        return (
+                                            <motion.div
+                                                key={item.name}
+                                                initial={{ opacity: 0, scale: 0, rotate: -10 + rand * 20 }}
+                                                animate={{
+                                                    opacity: 1,
+                                                    scale: 1,
+                                                    rotate: 0,
+                                                }}
+                                                transition={{
+                                                    delay: itemIndex * 0.06,
+                                                    type: "spring",
+                                                    stiffness: 260,
+                                                    damping: 20,
+                                                }}
+                                                className="relative"
+                                            >
+                                                <motion.div
+                                                    animate={{
+                                                        y: [-floatY, floatY, -floatY],
+                                                    }}
+                                                    transition={{
+                                                        duration: floatDuration,
+                                                        delay: floatDelay,
+                                                        repeat: Infinity,
+                                                        ease: "easeInOut",
+                                                    }}
+                                                    whileHover={{
+                                                        scale: 1.05,
+                                                        y: -6,
+                                                    }}
+                                                    className={`
+                                                        group relative ${tagStyle.padding} rounded-full cursor-default
+                                                        transition-all duration-300
+                                                        flex items-center gap-2
+                                                    `}
+                                                    style={{
+                                                        background: `linear-gradient(135deg, rgba(254,254,250,0.7), ${item.hexColor}10)`,
+                                                        backdropFilter: "blur(12px)",
+                                                        border: `1.5px solid ${item.hexColor}25`,
+                                                        boxShadow: `0 2px 8px rgba(0,0,0,0.04)`,
+                                                    }}
+                                                >
+                                                    {/* Colored dot indicator */}
+                                                    <span
+                                                        className={`${tagStyle.dot} rounded-full shrink-0`}
+                                                        style={{ backgroundColor: item.hexColor }}
+                                                    />
+                                                    <span className={`${tagStyle.text} ${item.color} whitespace-nowrap`}>
+                                                        {item.name}
+                                                    </span>
+                                                </motion.div>
+                                            </motion.div>
+                                        );
+                                    })}
                                 </div>
                             </div>
                         </motion.div>
