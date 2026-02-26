@@ -3,60 +3,65 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import ScrollReveal from "./ScrollReveal";
-
-// Matte theme colors cycling through the website palette
-const themeColors = [
-    "bg-tosca",
-    "bg-charcoal",
-    "bg-sage",
-    "bg-tosca-dark",
-    "bg-terracotta",
-    "bg-nude-warm",
-    "bg-tosca-light",
-];
+import {
+    ReactOriginal,
+    NextjsOriginal,
+    VuejsOriginal,
+    TypescriptOriginal,
+    JavascriptOriginal,
+    JqueryOriginal,
+    TailwindcssOriginal,
+    SassOriginal,
+    PhpOriginal,
+    PythonOriginal,
+    MysqlOriginal,
+    PostgresqlOriginal,
+    ReactnativeOriginal,
+} from "devicons-react";
+import type { ComponentType } from "react";
 
 type TechItem = {
     name: string;
-    bgColor: string;
+    Icon: ComponentType<{ size?: number | string; className?: string }>;
 };
 
 type TechGroup = {
     title: string;
-    subtitle: string;
     icon: string;
     items: TechItem[];
 };
 
-function assignColors(names: string[]): TechItem[] {
-    return names.map((name, i) => ({
-        name,
-        bgColor: themeColors[i % themeColors.length],
-    }));
-}
-
 const techGroups: TechGroup[] = [
     {
         title: "Frontend",
-        subtitle: "Building beautiful interfaces",
         icon: "🎨",
-        items: assignColors([
-            "React", "Next.js", "Vue.js", "TypeScript",
-            "JavaScript", "jQuery", "Tailwind CSS", "SCSS",
-        ]),
+        items: [
+            { name: "React", Icon: ReactOriginal },
+            { name: "Next.js", Icon: NextjsOriginal },
+            { name: "Vue.js", Icon: VuejsOriginal },
+            { name: "TypeScript", Icon: TypescriptOriginal },
+            { name: "JavaScript", Icon: JavascriptOriginal },
+            { name: "jQuery", Icon: JqueryOriginal },
+            { name: "Tailwind CSS", Icon: TailwindcssOriginal },
+            { name: "SCSS", Icon: SassOriginal },
+        ],
     },
     {
         title: "Backend",
-        subtitle: "Powering the server side",
         icon: "⚙️",
-        items: assignColors([
-            "PHP", "Python", "MySQL", "PostgreSQL", "REST APIs",
-        ]),
+        items: [
+            { name: "PHP", Icon: PhpOriginal },
+            { name: "Python", Icon: PythonOriginal },
+            { name: "MySQL", Icon: MysqlOriginal },
+            { name: "PostgreSQL", Icon: PostgresqlOriginal },
+        ],
     },
     {
         title: "Mobile",
-        subtitle: "Cross-platform experiences",
         icon: "📱",
-        items: assignColors(["React Native"]),
+        items: [
+            { name: "React Native", Icon: ReactnativeOriginal },
+        ],
     },
 ];
 
@@ -110,7 +115,7 @@ export default function Skills() {
                 {/* ===== TECHNOLOGIES SECTION ===== */}
                 <ScrollReveal delay={0.1}>
                     {/* Tab Navigation */}
-                    <div className="flex justify-center gap-2 sm:gap-4 mb-8">
+                    <div className="flex justify-center gap-2 sm:gap-4 mb-10">
                         {techGroups.map((group, index) => (
                             <motion.button
                                 key={group.title}
@@ -138,7 +143,7 @@ export default function Skills() {
                         ))}
                     </div>
 
-                    {/* Active Group Content — Matte Chip Cloud */}
+                    {/* Active Group Content — Icon Card Grid */}
                     <AnimatePresence mode="wait">
                         <motion.div
                             key={activeGroup}
@@ -147,9 +152,9 @@ export default function Skills() {
                             exit={{ opacity: 0, y: -20 }}
                             transition={{ duration: 0.3, ease: "easeInOut" }}
                         >
-                            <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 py-4">
+                            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-4 gap-4 sm:gap-5 max-w-2xl mx-auto">
                                 {techGroups[activeGroup].items.map((item, itemIndex) => (
-                                    <motion.span
+                                    <motion.div
                                         key={item.name}
                                         initial={{ opacity: 0, scale: 0.8 }}
                                         animate={{ opacity: 1, scale: 1 }}
@@ -159,11 +164,16 @@ export default function Skills() {
                                             stiffness: 300,
                                             damping: 20,
                                         }}
-                                        whileHover={{ scale: 1.05, y: -2 }}
-                                        className={`px-5 py-2.5 sm:px-6 sm:py-3 ${item.bgColor} text-soft-white rounded-full text-sm sm:text-base font-medium shadow-md cursor-default`}
+                                        whileHover={{ y: -4, scale: 1.03 }}
+                                        className="flex flex-col items-center gap-2 sm:gap-3 p-4 sm:p-5 bg-soft-white rounded-2xl shadow-md border border-nude/30 cursor-default transition-shadow duration-300 hover:shadow-lg"
                                     >
-                                        {item.name}
-                                    </motion.span>
+                                        <div className="w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center">
+                                            <item.Icon size={48} />
+                                        </div>
+                                        <span className="text-xs sm:text-sm font-medium text-charcoal/80 text-center leading-tight">
+                                            {item.name}
+                                        </span>
+                                    </motion.div>
                                 ))}
                             </div>
                         </motion.div>
