@@ -130,7 +130,6 @@ export default function Skills() {
                                     }
                                 `}
                             >
-                                <span className="mr-2">{group.icon}</span>
                                 {group.title}
                                 {activeGroup === index && (
                                     <motion.div
