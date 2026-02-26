@@ -16,7 +16,7 @@ export default function Hero() {
             id="home"
             className="scroll-snap-section min-h-screen flex items-center justify-center relative overflow-hidden retro-texture"
         >
-            {/* Decorative elements - 50s style */}
+            {/* Decorative elements */}
             <div className="absolute top-20 right-10 w-32 h-32 rounded-full bg-tosca-light/20 blur-3xl" />
             <div className="absolute bottom-20 left-10 w-40 h-40 rounded-full bg-peach/30 blur-3xl" />
             <div className="absolute top-1/3 left-1/4 w-20 h-20 rounded-full bg-nude-warm/20 blur-2xl" />
@@ -24,9 +24,9 @@ export default function Hero() {
             <div className="max-w-6xl mx-auto px-6 py-32 text-center relative z-10">
                 {/* Greeting */}
                 <motion.div
-                    initial={{ opacity: 0, y: 30 }}
+                    initial={{ opacity: 0, y: 15 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6 }}
+                    transition={{ duration: 0.5, ease: "easeOut" }}
                     className="mb-4"
                 >
                     <span className="inline-block px-4 py-2 bg-nude/50 rounded-full text-sm font-medium text-charcoal border border-nude-warm/30">
@@ -34,53 +34,23 @@ export default function Hero() {
                     </span>
                 </motion.div>
 
-                {/* Name */}
+                {/* Name - Simple fade in, no per-character animation */}
                 <motion.h1
                     className="text-5xl md:text-7xl lg:text-8xl font-bold text-charcoal mb-6"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.8, delay: 0.2 }}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.15, ease: "easeOut" }}
                 >
-                    {"Dorojatun".split("").map((char, index) => (
-                        <motion.span
-                            key={index}
-                            initial={{ opacity: 0, y: 50 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{
-                                duration: 0.4,
-                                delay: 0.3 + index * 0.05,
-                                ease: [0.25, 0.4, 0.25, 1],
-                            }}
-                            className="inline-block"
-                        >
-                            {char}
-                        </motion.span>
-                    ))}
+                    Dorojatun
                     <br />
-                    <span className="text-tosca">
-                        {"Chandrabumi".split("").map((char, index) => (
-                            <motion.span
-                                key={index}
-                                initial={{ opacity: 0, y: 50 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{
-                                    duration: 0.4,
-                                    delay: 0.6 + index * 0.05,
-                                    ease: [0.25, 0.4, 0.25, 1],
-                                }}
-                                className="inline-block"
-                            >
-                                {char}
-                            </motion.span>
-                        ))}
-                    </span>
+                    <span className="text-tosca">Chandrabumi</span>
                 </motion.h1>
 
                 {/* Subtitle */}
                 <motion.p
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: 15 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 1.2 }}
+                    transition={{ duration: 0.5, delay: 0.35, ease: "easeOut" }}
                     className="text-xl md:text-2xl text-charcoal/70 mb-8 max-w-2xl mx-auto"
                 >
                     Frontend Developer with{" "}
@@ -90,17 +60,14 @@ export default function Hero() {
 
                 {/* Tech Stack Badges */}
                 <motion.div
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: 15 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 1.4 }}
+                    transition={{ duration: 0.5, delay: 0.5, ease: "easeOut" }}
                     className="flex flex-wrap justify-center gap-3 mb-10"
                 >
-                    {techStack.map((tech, index) => (
+                    {techStack.map((tech) => (
                         <motion.span
                             key={tech.name}
-                            initial={{ opacity: 0, scale: 0.8 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            transition={{ delay: 1.5 + index * 0.1 }}
                             whileHover={{ scale: 1.05, y: -2 }}
                             className={`px-4 py-2 ${tech.color} text-soft-white rounded-full text-sm font-medium shadow-md cursor-default`}
                         >
@@ -111,9 +78,9 @@ export default function Hero() {
 
                 {/* CTA Buttons */}
                 <motion.div
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: 15 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 1.8 }}
+                    transition={{ duration: 0.5, delay: 0.65, ease: "easeOut" }}
                     className="flex flex-col sm:flex-row gap-4 justify-center"
                 >
                     <motion.a
@@ -138,7 +105,7 @@ export default function Hero() {
                 <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    transition={{ delay: 2.2 }}
+                    transition={{ delay: 1.2 }}
                     className="absolute bottom-10 left-1/2 -translate-x-1/2"
                 >
                     <motion.div

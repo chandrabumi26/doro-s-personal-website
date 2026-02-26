@@ -80,7 +80,7 @@ export default function Contact() {
                 <ScrollReveal delay={0.2}>
                     <motion.div
                         whileHover={{ y: -4 }}
-                        className="relative bg-linear-to-br from-cream to-nude/50 rounded-3xl p-8 md:p-12 shadow-xl border border-nude-warm/20 overflow-hidden"
+                        className="relative bg-linear-to-br from-cream to-nude/50 rounded-3xl p-5 sm:p-8 md:p-12 shadow-xl border border-nude-warm/20 overflow-hidden"
                     >
                         {/* Decorative corner */}
                         <div className="absolute -top-10 -right-10 w-32 h-32 bg-tosca/10 rounded-full blur-2xl" />
@@ -88,21 +88,21 @@ export default function Contact() {
 
                         <div className="relative z-10">
                             {/* Greeting */}
-                            <div className="text-center mb-10">
+                            <div className="text-center mb-6 sm:mb-10">
                                 <motion.span
                                     animate={{ rotate: [0, 20, 0, 20, 0] }}
                                     transition={{ duration: 1.5, repeat: Infinity, repeatDelay: 3 }}
-                                    className="inline-block text-5xl mb-4"
+                                    className="inline-block text-4xl sm:text-5xl mb-3 sm:mb-4"
                                 >
                                     👋
                                 </motion.span>
-                                <h3 className="text-2xl font-bold text-charcoal">
+                                <h3 className="text-xl sm:text-2xl font-bold text-charcoal">
                                     Ready to start a project?
                                 </h3>
                             </div>
 
                             {/* Contact Links Grid */}
-                            <div className="grid sm:grid-cols-2 gap-4">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                                 {contactLinks.map((link, index) => (
                                     <motion.a
                                         key={link.name}
@@ -114,19 +114,19 @@ export default function Contact() {
                                         transition={{ delay: 0.1 * index }}
                                         whileHover={{ scale: 1.02, x: 4 }}
                                         whileTap={{ scale: 0.98 }}
-                                        className="group flex items-center gap-4 p-4 bg-soft-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 border border-transparent hover:border-tosca/20"
+                                        className="group flex items-center gap-3 sm:gap-4 p-3 sm:p-4 bg-soft-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 border border-transparent hover:border-tosca/20 min-w-0"
                                     >
-                                        <div className="w-12 h-12 rounded-lg bg-charcoal flex items-center justify-center text-soft-white group-hover:bg-tosca transition-colors duration-300">
+                                        <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-charcoal flex items-center justify-center text-soft-white group-hover:bg-tosca transition-colors duration-300 shrink-0">
                                             {link.icon}
                                         </div>
-                                        <div>
-                                            <p className="text-sm text-charcoal/60">{link.name}</p>
-                                            <p className="font-medium text-charcoal group-hover:text-tosca transition-colors duration-300">
+                                        <div className="min-w-0 flex-1">
+                                            <p className="text-xs sm:text-sm text-charcoal/60">{link.name}</p>
+                                            <p className="font-medium text-sm sm:text-base text-charcoal group-hover:text-tosca transition-colors duration-300 truncate">
                                                 {link.value}
                                             </p>
                                         </div>
                                         <svg
-                                            className="w-5 h-5 ml-auto text-charcoal/30 group-hover:text-tosca group-hover:translate-x-1 transition-all duration-300"
+                                            className="w-4 h-4 sm:w-5 sm:h-5 text-charcoal/30 group-hover:text-tosca group-hover:translate-x-1 transition-all duration-300 shrink-0"
                                             fill="none"
                                             stroke="currentColor"
                                             viewBox="0 0 24 24"
@@ -143,16 +143,16 @@ export default function Contact() {
                             </div>
 
                             {/* CTA Buttons */}
-                            <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
+                            <div className="mt-6 sm:mt-10 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
                                 <motion.a
                                     href="mailto:chandra.bumi@gmail.com"
                                     whileHover={{ scale: 1.02, y: -2 }}
                                     whileTap={{ scale: 0.98 }}
-                                    className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-tosca text-soft-white rounded-full font-semibold shadow-lg shadow-tosca/30 hover:bg-tosca-dark transition-colors duration-200"
+                                    className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-tosca text-soft-white rounded-full font-semibold shadow-lg shadow-tosca/30 hover:bg-tosca-dark transition-colors duration-200 text-sm sm:text-base"
                                 >
                                     <span>Send Me a Message</span>
                                     <svg
-                                        className="w-5 h-5"
+                                        className="w-4 h-4 sm:w-5 sm:h-5"
                                         fill="none"
                                         stroke="currentColor"
                                         viewBox="0 0 24 24"
@@ -170,10 +170,10 @@ export default function Contact() {
                                     download
                                     whileHover={{ scale: 1.02, y: -2 }}
                                     whileTap={{ scale: 0.98 }}
-                                    className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-charcoal text-soft-white rounded-full font-semibold shadow-lg shadow-charcoal/30 hover:bg-charcoal/90 transition-colors duration-200"
+                                    className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-charcoal text-soft-white rounded-full font-semibold shadow-lg shadow-charcoal/30 hover:bg-charcoal/90 transition-colors duration-200 text-sm sm:text-base"
                                 >
                                     <svg
-                                        className="w-5 h-5"
+                                        className="w-4 h-4 sm:w-5 sm:h-5"
                                         fill="none"
                                         stroke="currentColor"
                                         viewBox="0 0 24 24"

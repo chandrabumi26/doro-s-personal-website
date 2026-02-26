@@ -62,9 +62,9 @@ export default function About() {
         }),
     };
 
-    const stats = [
-        { icon: "🎮", value: "Pokémon", label: "Trainer" },
-        { icon: "🤖", value: "Gundam", label: "Builder" },
+    const stats: { icon: React.ReactNode; value: string; label: string }[] = [
+        { icon: <Image src="/pokeball.svg" alt="Pokeball" width={28} height={28} className="object-contain" />, value: "Pokémon", label: "Trainer" },
+        { icon: <Image src="/gundam.svg" alt="Gundam" width={28} height={28} className="object-contain" />, value: "Gundam", label: "Builder" },
         { icon: "⭐", value: "4+", label: "Years Exp." },
         { icon: "☕", value: "∞", label: "Coffee" },
     ];
