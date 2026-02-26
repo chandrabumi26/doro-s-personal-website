@@ -22,18 +22,6 @@ export default function Hero() {
             <div className="absolute top-1/3 left-1/4 w-20 h-20 rounded-full bg-nude-warm/20 blur-2xl" />
 
             <div className="max-w-6xl mx-auto px-6 py-32 text-center relative z-10">
-                {/* Greeting */}
-                <motion.div
-                    initial={{ opacity: 0, y: 15 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, ease: "easeOut" }}
-                    className="mb-4"
-                >
-                    <span className="inline-block px-4 py-2 bg-nude/50 rounded-full text-sm font-medium text-charcoal border border-nude-warm/30">
-                        👋 Welcome to my portfolio
-                    </span>
-                </motion.div>
-
                 {/* Name - Simple fade in, no per-character animation */}
                 <motion.h1
                     className="text-5xl md:text-7xl lg:text-8xl font-bold text-charcoal mb-6"
