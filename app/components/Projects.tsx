@@ -39,7 +39,7 @@ const projects: ProjectData[] = [
         title: "BUMA Internal Apps",
         company: "PT. Bukit Makmur Mandiri Utama",
         role: "Frontend Developer",
-        period: "2023 - 2024",
+        period: "2022 - 2024",
         description:
             "Developed and maintained internal applications supporting procurement, inventory, and pricing workflows at BUMA (PT. Bukit Makmur Mandiri Utama), one of Indonesia's largest coal mining contractors. Built scalable solutions using Vue.js 3, Vuex, and TypeScript in an Agile environment, leveraging micro front-end architecture for modular systems.",
         logo: "/projects/buma/logo.png",
@@ -67,7 +67,7 @@ const projects: ProjectData[] = [
         title: "MLDSpot",
         company: "Djarum Super MLD",
         role: "Frontend Developer",
-        period: "2022 - 2023",
+        period: "2021 - 2022",
         description:
             "MLDSpot is a points redemption website for Djarum Super MLD consumers. Users can claim MLDPOINTS by submitting their purchase receipt reference numbers and uploading receipt photos from retail stores like Indomaret. The accumulated points can then be redeemed for exclusive merchandise and rewards.",
         logo: "/projects/mldspot-logo.png",
@@ -116,8 +116,8 @@ const projects: ProjectData[] = [
         id: 5,
         title: "SysLaw Partner",
         company: "SYS Law Office",
-        role: "Frontend Developer",
-        period: "2024",
+        role: "Freelancer",
+        period: "2025",
         description:
             "Designed and developed a responsive law firm company profile website to present firm information, services, and brand identity. Collaborated closely with a UI/UX designer to translate design concepts into a polished, production-ready web experience. Responsibilities included frontend development, performance optimization, and deployment. The website was deployed on Vercel and configured with a custom domain to ensure reliable hosting and smooth delivery for the client.",
         logo: "/projects/syslawnpartner/logo.png",
@@ -417,9 +417,6 @@ export default function Projects() {
                                                     <h3 className="text-xl font-bold text-charcoal mb-1 group-hover:text-tosca transition-colors duration-300">
                                                         {project.title}
                                                     </h3>
-                                                    <p className="text-sm text-tosca-dark font-medium mb-2">
-                                                        {project.role} · {project.period}
-                                                    </p>
                                                     <p className="text-charcoal/70 text-sm mb-3 line-clamp-2">
                                                         {project.description}
                                                     </p>
