@@ -309,7 +309,7 @@ export default function Projects() {
                                                         : "0 4px 10px rgba(0, 0, 0, 0.1)",
                                                 }}
                                             >
-                                                📁 Projects Collection
+                                                Projects Collection
                                             </motion.span>
                                         </motion.div>
 

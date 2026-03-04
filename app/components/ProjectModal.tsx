@@ -28,6 +28,7 @@ interface ProjectModalProps {
 export default function ProjectModal({ project, isOpen, onClose }: ProjectModalProps) {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [direction, setDirection] = useState(0);
+    const [imageLoaded, setImageLoaded] = useState(false);
     // Cache project data so it persists during exit animation
     const [displayedProject, setDisplayedProject] = useState<ProjectData | null>(null);
     // Track the previous project ID to detect changes
@@ -44,6 +45,7 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
     const nextImage = useCallback(() => {
         if (!displayedProject) return;
         setDirection(1);
+        setImageLoaded(false);
         setCurrentImageIndex((prev) =>
             prev === displayedProject.screenshots.length - 1 ? 0 : prev + 1
         );
@@ -52,6 +54,7 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
     const prevImage = useCallback(() => {
         if (!displayedProject) return;
         setDirection(-1);
+        setImageLoaded(false);
         setCurrentImageIndex((prev) =>
             prev === 0 ? displayedProject.screenshots.length - 1 : prev - 1
         );
@@ -163,6 +166,49 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
                             <div className="relative bg-linear-to-br from-tosca/10 to-peach/10 p-6 pb-8">
                                 {/* Carousel Container */}
                                 <div className="relative aspect-video rounded-xl overflow-hidden bg-charcoal/5 shadow-lg">
+                                    {/* Shimmer Skeleton Loader */}
+                                    <AnimatePresence>
+                                        {!imageLoaded && (
+                                            <motion.div
+                                                initial={{ opacity: 1 }}
+                                                exit={{ opacity: 0 }}
+                                                transition={{ duration: 0.4, ease: "easeOut" }}
+                                                className="absolute inset-0 z-10"
+                                            >
+                                                <div className="absolute inset-0 bg-linear-to-br from-nude/60 via-tosca/10 to-peach/40" />
+                                                <div
+                                                    className="absolute inset-0"
+                                                    style={{
+                                                        background: "linear-gradient(90deg, transparent 0%, rgba(95, 189, 189, 0.15) 20%, rgba(255, 255, 255, 0.3) 50%, rgba(95, 189, 189, 0.15) 80%, transparent 100%)",
+                                                        backgroundSize: "200% 100%",
+                                                        animation: "shimmer 1.5s ease-in-out infinite",
+                                                    }}
+                                                />
+                                                {/* Decorative loading indicator */}
+                                                <div className="absolute inset-0 flex flex-col items-center justify-center gap-3">
+                                                    <div className="flex gap-1.5">
+                                                        {[0, 1, 2].map((i) => (
+                                                            <motion.div
+                                                                key={i}
+                                                                className="w-2 h-2 rounded-full bg-tosca/50"
+                                                                animate={{
+                                                                    y: [0, -8, 0],
+                                                                    opacity: [0.4, 1, 0.4],
+                                                                }}
+                                                                transition={{
+                                                                    duration: 0.8,
+                                                                    repeat: Infinity,
+                                                                    delay: i * 0.15,
+                                                                    ease: "easeInOut",
+                                                                }}
+                                                            />
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            </motion.div>
+                                        )}
+                                    </AnimatePresence>
+
                                     <AnimatePresence initial={false} custom={direction} mode="wait">
                                         <motion.div
                                             key={currentImageIndex}
@@ -181,8 +227,9 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
                                                 src={displayedProject.screenshots[currentImageIndex]}
                                                 alt={`${displayedProject.title} screenshot ${currentImageIndex + 1}`}
                                                 fill
-                                                className="object-cover"
+                                                className={`object-cover transition-opacity duration-500 ease-out ${imageLoaded ? "opacity-100" : "opacity-0"}`}
                                                 priority
+                                                onLoad={() => setImageLoaded(true)}
                                             />
                                         </motion.div>
                                     </AnimatePresence>
@@ -248,6 +295,7 @@ export default function ProjectModal({ project, isOpen, onClose }: ProjectModalP
                                                 key={index}
                                                 onClick={() => {
                                                     setDirection(index > currentImageIndex ? 1 : -1);
+                                                    setImageLoaded(false);
                                                     setCurrentImageIndex(index);
                                                 }}
                                                 className={`w-2.5 h-2.5 rounded-full transition-colors ${
