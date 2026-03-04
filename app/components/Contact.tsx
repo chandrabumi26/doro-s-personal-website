@@ -40,7 +40,7 @@ const contactLinks = [
     },
     {
         name: "Email",
-        value: "chandra.bumi@gmail.com",
+        value: "dorojatun.chandrabumi@gmail.com",
         icon: (
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
@@ -51,7 +51,7 @@ const contactLinks = [
                 />
             </svg>
         ),
-        href: "mailto:chandra.bumi@gmail.com",
+        href: "mailto:dorojatun.chandrabumi@gmail.com",
     },
 ];
 
@@ -89,13 +89,6 @@ export default function Contact() {
                         <div className="relative z-10">
                             {/* Greeting */}
                             <div className="text-center mb-6 sm:mb-10">
-                                <motion.span
-                                    animate={{ rotate: [0, 20, 0, 20, 0] }}
-                                    transition={{ duration: 1.5, repeat: Infinity, repeatDelay: 3 }}
-                                    className="inline-block text-4xl sm:text-5xl mb-3 sm:mb-4"
-                                >
-                                    👋
-                                </motion.span>
                                 <h3 className="text-xl sm:text-2xl font-bold text-charcoal">
                                     Ready to start a project?
                                 </h3>
@@ -145,32 +138,11 @@ export default function Contact() {
                             {/* CTA Buttons */}
                             <div className="mt-6 sm:mt-10 flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
                                 <motion.a
-                                    href="mailto:chandra.bumi@gmail.com"
-                                    whileHover={{ scale: 1.02, y: -2 }}
-                                    whileTap={{ scale: 0.98 }}
-                                    className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-tosca text-soft-white rounded-full font-semibold shadow-lg shadow-tosca/30 hover:bg-tosca-dark transition-colors duration-200 text-sm sm:text-base"
-                                >
-                                    <span>Send Me a Message</span>
-                                    <svg
-                                        className="w-4 h-4 sm:w-5 sm:h-5"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        viewBox="0 0 24 24"
-                                    >
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth={2}
-                                            d="M14 5l7 7m0 0l-7 7m7-7H3"
-                                        />
-                                    </svg>
-                                </motion.a>
-                                <motion.a
                                     href="/pdf/CV-Dorojatun-Chandrabumi.pdf"
                                     download
                                     whileHover={{ scale: 1.02, y: -2 }}
                                     whileTap={{ scale: 0.98 }}
-                                    className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-charcoal text-soft-white rounded-full font-semibold shadow-lg shadow-charcoal/30 hover:bg-charcoal/90 transition-colors duration-200 text-sm sm:text-base"
+                                    className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-tosca text-soft-white rounded-full font-semibold shadow-lg shadow-tosca/30 hover:bg-tosca-dark transition-colors duration-200 text-sm sm:text-base"
                                 >
                                     <svg
                                         className="w-4 h-4 sm:w-5 sm:h-5"

@@ -7,7 +7,6 @@ import Image from "next/image";
 export default function About() {
     const sectionRef = useRef(null);
     const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
-    const [isFlipped, setIsFlipped] = useState(false);
 
     const containerVariants = {
         hidden: { opacity: 0 },
@@ -124,12 +123,9 @@ export default function About() {
                         <div 
                             className="relative aspect-square cursor-pointer"
                             style={{ perspective: "1000px" }}
-                            onMouseEnter={() => setIsFlipped(true)}
-                            onMouseLeave={() => setIsFlipped(false)}
                         >
                             <motion.div
                                 className="relative w-full h-full"
-                                animate={{ rotateY: isFlipped ? 180 : 0 }}
                                 transition={{ duration: 0.6, ease: "easeInOut" }}
                                 style={{ transformStyle: "preserve-3d" }}
                             >
@@ -174,26 +170,6 @@ export default function About() {
                                     />
                                 </div>
 
-                                {/* Back - Real Photo */}
-                                <div 
-                                    className="absolute inset-0 bg-linear-to-br from-charcoal to-charcoal/90 rounded-2xl flex items-center justify-center overflow-hidden shadow-xl"
-                                    style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
-                                >
-                                    <Image
-                                        src="/profile-real.jpg"
-                                        alt="Dorojatun Chandrabumi"
-                                        fill
-                                        sizes="(max-width: 768px) 100vw, 400px"
-                                        quality={100}
-                                        className="object-cover"
-                                        priority
-                                    />
-                                    {/* Overlay gradient */}
-                                    <div className="absolute inset-0 bg-linear-to-t from-charcoal/50 to-transparent" />
-                                    <div className="absolute bottom-4 left-4 text-soft-white">
-                                        <p className="text-sm font-medium opacity-80">The real me 👋</p>
-                                    </div>
-                                </div>
                             </motion.div>
                         </div>
                     </motion.div>
