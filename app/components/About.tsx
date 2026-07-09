@@ -1,12 +1,36 @@
 "use client";
 
 import { motion, useInView } from "motion/react";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import Image from "next/image";
 
 export default function About() {
     const sectionRef = useRef(null);
     const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
+
+    const focusItems = [
+        { title: "Agentic AI", subtitle: "Building intelligent systems", bg: "bg-tosca/8", border: "border-tosca/20", accent: "text-tosca-dark" },
+        { title: "World History", subtitle: "Stories that shaped our world", bg: "bg-peach/15", border: "border-peach/20", accent: "text-terracotta" },
+        { title: "Business Scaling", subtitle: "AI-driven growth", bg: "bg-sage/15", border: "border-sage/30", accent: "text-charcoal/70" },
+        { title: "Nuclear Science", subtitle: "From fission to Chernobyl", bg: "bg-nude/30", border: "border-nude-warm/30", accent: "text-nude-warm" },
+        { title: "React Architecture", subtitle: "Scalable frontend patterns", bg: "bg-cream", border: "border-charcoal/10", accent: "text-charcoal/70" },
+        { title: "Playing Piano", subtitle: "Keys to unwind", bg: "bg-tosca-light/10", border: "border-tosca-light/20", accent: "text-tosca-dark" },
+    ];
+
+    const cardVariants = {
+        hidden: { opacity: 0, y: 20, scale: 0.95 },
+        visible: (i: number) => ({
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            transition: {
+                type: "spring" as const,
+                stiffness: 120,
+                damping: 18,
+                delay: 0.5 + i * 0.08,
+            },
+        }),
+    };
 
     const containerVariants = {
         hidden: { opacity: 0 },
@@ -46,27 +70,6 @@ export default function About() {
             },
         },
     };
-
-    const statsVariants = {
-        hidden: { opacity: 0, scale: 0.5 },
-        visible: (i: number) => ({
-            opacity: 1,
-            scale: 1,
-            transition: {
-                type: "spring" as const,
-                stiffness: 200,
-                damping: 15,
-                delay: 0.6 + i * 0.1,
-            },
-        }),
-    };
-
-    const stats: { icon: React.ReactNode; value: string; label: string }[] = [
-        { icon: <Image src="/pokeball.svg" alt="Pokeball" width={28} height={28} className="object-contain" />, value: "Pokémon", label: "Trainer" },
-        { icon: <Image src="/gundam.svg" alt="Gundam" width={28} height={28} className="object-contain" />, value: "Gundam", label: "Builder" },
-        { icon: "⭐", value: "4+", label: "Years Exp." },
-        { icon: "☕", value: "∞", label: "Coffee" },
-    ];
 
     return (
         <section
@@ -221,47 +224,41 @@ export default function About() {
                             Chernobyl, and other intriguing stories from the past.
                         </motion.p>
 
-                        {/* Stats */}
-                        <motion.div variants={itemVariants} className="flex flex-wrap gap-4 pt-4">
-                            {stats.map((stat, index) => (
-                                <motion.div
-                                    key={stat.label}
-                                    custom={index}
-                                    variants={statsVariants}
-                                    whileHover={{
-                                        scale: 1.08,
-                                        y: -4,
-                                        boxShadow: "0 10px 30px rgba(95, 189, 189, 0.2)",
-                                    }}
-                                    whileTap={{ scale: 0.95 }}
-                                    className="flex items-center gap-2 px-4 py-2 bg-soft-white rounded-lg shadow-sm cursor-default border border-transparent hover:border-tosca/20 transition-colors"
-                                >
-                                    <motion.span
-                                        className="text-2xl"
-                                        animate={{
-                                            rotate: [0, 10, -10, 0],
+                        {/* Beautiful Bento Grid Focus */}
+                        <motion.div className="pt-4 mt-2 border-t border-charcoal/10">
+                            <motion.h3
+                                variants={itemVariants}
+                                className="text-xs font-bold tracking-[0.2em] uppercase text-charcoal/40 mb-5 ml-1"
+                            >
+                                Current Focus & Interests
+                            </motion.h3>
+
+                            <motion.div
+                                className="grid grid-cols-2 sm:grid-cols-3 gap-3"
+                                initial="hidden"
+                                animate={isInView ? "visible" : "hidden"}
+                            >
+                                {focusItems.map((item, i) => (
+                                    <motion.div
+                                        key={item.title}
+                                        custom={i}
+                                        variants={cardVariants}
+                                        whileHover={{
+                                            y: -3,
+                                            boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.05)",
+                                            transition: { duration: 0.2, ease: "easeOut" }
                                         }}
-                                        transition={{
-                                            duration: 2,
-                                            repeat: Infinity,
-                                            repeatDelay: 3 + index,
-                                        }}
+                                        className={`p-4 rounded-2xl border ${item.bg} ${item.border} transition-colors duration-300 flex flex-col justify-center cursor-default`}
                                     >
-                                        {stat.icon}
-                                    </motion.span>
-                                    <div>
-                                        <motion.p
-                                            className="font-bold text-charcoal"
-                                            initial={{ opacity: 0 }}
-                                            animate={isInView ? { opacity: 1 } : {}}
-                                            transition={{ delay: 0.8 + index * 0.1 }}
-                                        >
-                                            {stat.value}
-                                        </motion.p>
-                                        <p className="text-xs text-charcoal/60">{stat.label}</p>
-                                    </div>
-                                </motion.div>
-                            ))}
+                                        <span className={`text-xs font-bold mb-1 ${item.accent}`}>
+                                            {item.title}
+                                        </span>
+                                        <span className="text-[10px] sm:text-xs text-charcoal/60 leading-tight">
+                                            {item.subtitle}
+                                        </span>
+                                    </motion.div>
+                                ))}
+                            </motion.div>
                         </motion.div>
                     </div>
                 </motion.div>

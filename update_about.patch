@@ -1,0 +1,52 @@
+--- app/components/About.tsx
++++ app/components/About.tsx
+@@ -200,6 +200,53 @@
+                             Chernobyl, and other intriguing stories from the past.
+                         </motion.p>
++
++                        {/* Current Focus Section */}
++                        <motion.div 
++                            variants={itemVariants}
++                            className="grid sm:grid-cols-2 gap-6 pt-6 mt-2 border-t border-charcoal/10"
++                        >
++                            {/* Technical Focus */}
++                            <div className="space-y-3">
++                                <h3 className="text-tosca-dark font-bold text-sm tracking-widest uppercase">
++                                    Currently Exploring
++                                </h3>
++                                <ul className="space-y-2">
++                                    {[
++                                        "Advanced React Server Components",
++                                        "Micro-frontend Architecture",
++                                        "Web Performance Optimization"
++                                    ].map((item, i) => (
++                                        <li key={i} className="flex items-start gap-2 text-charcoal/80 text-sm">
++                                            <span className="text-tosca mt-1 font-bold">▹</span>
++                                            <span>{item}</span>
++                                        </li>
++                                    ))}
++                                </ul>
++                            </div>
++
++                            {/* Beyond Code Focus */}
++                            <div className="space-y-3">
++                                <h3 className="text-nude-warm font-bold text-sm tracking-widest uppercase">
++                                    Beyond the Screen
++                                </h3>
++                                <ul className="space-y-2">
++                                    {[
++                                        "Building Gunpla Models",
++                                        "Historical Documentaries",
++                                        "Discovering Specialty Coffee"
++                                    ].map((item, i) => (
++                                        <li key={i} className="flex items-start gap-2 text-charcoal/80 text-sm">
++                                            <span className="text-nude-warm mt-1 font-bold">▹</span>
++                                            <span>{item}</span>
++                                        </li>
++                                    ))}
++                                </ul>
++                            </div>
++                        </motion.div>
+                     </div>
+                 </motion.div>
+             </div>

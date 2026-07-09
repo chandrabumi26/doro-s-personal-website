@@ -1,25 +1,121 @@
 "use client";
 
 import { motion } from "motion/react";
+import { useState, useEffect } from "react";
 
-const techStack = [
-    { name: "React", color: "bg-tosca" },
-    { name: "Next.js", color: "bg-charcoal" },
-    { name: "Vue.js", color: "bg-sage" },
-    { name: "TypeScript", color: "bg-tosca-dark" },
-    { name: "Tailwind", color: "bg-terracotta" },
+const focusPills = [
+    { name: "AI Integrations", color: "text-tosca-dark border-tosca/20 bg-tosca/5" },
+    { name: "Web Architecture", color: "text-charcoal/80 border-charcoal/15 bg-charcoal/5" },
+    { name: "Creative Code", color: "text-nude-warm border-nude-warm/20 bg-nude-warm/5" },
+];
+
+// For the constellation background animation
+const constellationDots = [
+    { id: 0, x: "75%", y: "25%", color: "#5FBDBD", size: "6px" }, // tosca
+    { id: 1, x: "67%", y: "67%", color: "#D4A574", size: "8px" }, // nude-warm
+    { id: 2, x: "15%", y: "33%", color: "#78CAD2", size: "8px" }, // tosca-light
+    { id: 3, x: "25%", y: "75%", color: "#F5D5C8", size: "6px" }, // peach
+    { id: 4, x: "85%", y: "50%", color: "#5FBDBD", size: "10px", outline: true }, // tosca outline
+    { id: 5, x: "40%", y: "15%", color: "#A8C5B5", size: "6px" }, // sage
+    { id: 6, x: "80%", y: "85%", color: "#5FBDBD", size: "7px" }, // tosca
 ];
 
 export default function Hero() {
+    const [activeLine, setActiveLine] = useState(0);
+
+    // Advance the constellation line every 3 seconds
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setActiveLine((prev) => (prev + 1) % constellationDots.length);
+        }, 3000);
+        return () => clearInterval(interval);
+    }, []);
+
+    const currentDot = constellationDots[activeLine];
+    const nextDot = constellationDots[(activeLine + 1) % constellationDots.length];
+
     return (
         <section
             id="home"
             className="scroll-snap-section min-h-screen flex items-center justify-center relative overflow-hidden retro-texture"
         >
-            {/* Decorative elements */}
-            <div className="absolute top-20 right-10 w-32 h-32 rounded-full bg-tosca-light/20 blur-3xl" />
-            <div className="absolute bottom-20 left-10 w-40 h-40 rounded-full bg-peach/30 blur-3xl" />
-            <div className="absolute top-1/3 left-1/4 w-20 h-20 rounded-full bg-nude-warm/20 blur-2xl" />
+            {/* Animated background blobs */}
+            <motion.div
+                className="absolute top-20 right-10 md:right-32 w-48 h-48 rounded-full bg-tosca-light/20 blur-3xl"
+                animate={{ y: [0, 20, 0], x: [0, -10, 0], scale: [1, 1.05, 1] }}
+                transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+            />
+            <motion.div
+                className="absolute bottom-20 left-10 md:left-20 w-56 h-56 rounded-full bg-peach/20 blur-3xl"
+                animate={{ y: [0, -25, 0], x: [0, 15, 0], scale: [1, 1.1, 1] }}
+                transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+            />
+            <motion.div
+                className="absolute top-1/3 left-1/3 w-32 h-32 rounded-full bg-nude-warm/15 blur-2xl"
+                animate={{ y: [0, 15, 0], scale: [1, 1.05, 1] }}
+                transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+            />
+
+            {/* Constellation: Dots + Traveling Line */}
+            <div className="absolute inset-0 w-full h-full pointer-events-none z-0">
+                {/* Dots */}
+                {constellationDots.map((dot, index) => {
+                    const isActive = index === activeLine || index === (activeLine + 1) % constellationDots.length;
+                    return (
+                        <motion.div
+                            key={dot.id}
+                            className="absolute rounded-full"
+                            style={{
+                                left: dot.x,
+                                top: dot.y,
+                                width: dot.size,
+                                height: dot.size,
+                                backgroundColor: dot.outline ? "transparent" : dot.color,
+                                border: dot.outline ? `2px solid ${dot.color}` : "none",
+                            }}
+                            animate={{
+                                opacity: isActive ? 0.9 : 0.35,
+                                y: [0, -8, 0],
+                                scale: isActive ? 1.3 : 1,
+                            }}
+                            transition={{
+                                opacity: { duration: 1, ease: "easeInOut" },
+                                scale: { duration: 1, ease: "easeInOut" },
+                                y: { duration: 4 + (index % 3), repeat: Infinity, ease: "easeInOut" },
+                            }}
+                        />
+                    );
+                })}
+
+                {/* Traveling Line (SVG) */}
+                <svg className="absolute inset-0 w-full h-full overflow-visible">
+                    <defs>
+                        <mask id="center-mask">
+                            <rect width="100%" height="100%" fill="white" />
+                            <ellipse cx="50%" cy="50%" rx="35%" ry="30%" fill="url(#soft-gradient)" />
+                        </mask>
+                        <radialGradient id="soft-gradient" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" stopColor="black" stopOpacity="1" />
+                            <stop offset="60%" stopColor="black" stopOpacity="0.8" />
+                            <stop offset="100%" stopColor="black" stopOpacity="0" />
+                        </radialGradient>
+                    </defs>
+                    <motion.line
+                        key={`line-${activeLine}`}
+                        x1={currentDot.x}
+                        y1={currentDot.y}
+                        x2={nextDot.x}
+                        y2={nextDot.y}
+                        stroke={nextDot.color}
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        mask="url(#center-mask)"
+                        initial={{ pathLength: 0, opacity: 0 }}
+                        animate={{ pathLength: 1, opacity: [0, 0.5, 0.5, 0] }}
+                        transition={{ duration: 2.8, ease: "easeInOut" }}
+                    />
+                </svg>
+            </div>
 
             <div className="max-w-6xl mx-auto px-6 py-32 text-center relative z-10">
                 {/* Name - Simple fade in, no per-character animation */}
@@ -46,20 +142,20 @@ export default function Hero() {
                     experience crafting beautiful, responsive web experiences
                 </motion.p>
 
-                {/* Tech Stack Badges */}
+                {/* Minimal Keyword Pills */}
                 <motion.div
                     initial={{ opacity: 0, y: 15 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.5, ease: "easeOut" }}
-                    className="flex flex-wrap justify-center gap-3 mb-10"
+                    className="flex flex-wrap justify-center gap-4 mb-10"
                 >
-                    {techStack.map((tech) => (
+                    {focusPills.map((pill) => (
                         <motion.span
-                            key={tech.name}
+                            key={pill.name}
                             whileHover={{ scale: 1.05, y: -2 }}
-                            className={`px-4 py-2 ${tech.color} text-soft-white rounded-full text-sm font-medium shadow-md cursor-default`}
+                            className={`px-5 py-1.5 border rounded-full text-sm tracking-wide font-medium backdrop-blur-sm cursor-default transition-colors ${pill.color}`}
                         >
-                            {tech.name}
+                            {pill.name}
                         </motion.span>
                     ))}
                 </motion.div>
