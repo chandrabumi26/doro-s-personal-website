@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
+import { useState, useEffect } from "react";
 
 const focusPills = [
     { name: "AI Integrations", color: "text-tosca-dark border-tosca/20 bg-tosca/5" },
@@ -8,7 +9,31 @@ const focusPills = [
     { name: "Creative Code", color: "text-nude-warm border-nude-warm/20 bg-nude-warm/5" },
 ];
 
+// For the constellation background animation
+const constellationDots = [
+    { id: 0, x: "75%", y: "25%", color: "#5FBDBD", size: "6px" }, // tosca
+    { id: 1, x: "67%", y: "67%", color: "#D4A574", size: "8px" }, // nude-warm
+    { id: 2, x: "15%", y: "33%", color: "#78CAD2", size: "8px" }, // tosca-light
+    { id: 3, x: "25%", y: "75%", color: "#F5D5C8", size: "6px" }, // peach
+    { id: 4, x: "85%", y: "50%", color: "#5FBDBD", size: "10px", outline: true }, // tosca outline
+    { id: 5, x: "40%", y: "15%", color: "#A8C5B5", size: "6px" }, // sage
+    { id: 6, x: "80%", y: "85%", color: "#5FBDBD", size: "7px" }, // tosca
+];
+
 export default function Hero() {
+    const [activeLine, setActiveLine] = useState(0);
+
+    // Advance the constellation line every 3 seconds
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setActiveLine((prev) => (prev + 1) % constellationDots.length);
+        }, 3000);
+        return () => clearInterval(interval);
+    }, []);
+
+    const currentDot = constellationDots[activeLine];
+    const nextDot = constellationDots[(activeLine + 1) % constellationDots.length];
+
     return (
         <section
             id="home"
@@ -31,42 +56,66 @@ export default function Hero() {
                 transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 2 }}
             />
 
-            {/* Floating dots */}
-            <motion.div
-                className="absolute top-1/4 right-1/4 w-2.5 h-2.5 rounded-full bg-tosca/50"
-                animate={{ y: [0, -18, 0], opacity: [0.4, 0.9, 0.4] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-            />
-            <motion.div
-                className="absolute bottom-1/3 right-1/3 w-3 h-3 rounded-full bg-nude-warm/50"
-                animate={{ y: [0, -22, 0], opacity: [0.3, 0.8, 0.3] }}
-                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
-            />
-            <motion.div
-                className="absolute top-1/3 left-[15%] w-3 h-3 rounded-full bg-tosca-light/60"
-                animate={{ y: [0, 18, 0], opacity: [0.3, 0.7, 0.3] }}
-                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-            />
-            <motion.div
-                className="absolute bottom-1/4 left-1/4 w-2 h-2 rounded-full bg-peach/60"
-                animate={{ y: [0, -14, 0], opacity: [0.3, 0.7, 0.3] }}
-                transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 2.5 }}
-            />
-            <motion.div
-                className="absolute top-1/2 right-[15%] w-3.5 h-3.5 rounded-full border-2 border-tosca/40"
-                animate={{ y: [0, -25, 0], opacity: [0.3, 0.7, 0.3] }}
-                transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-            />
-            <motion.div
-                className="absolute top-[15%] left-[40%] w-2 h-2 rounded-full bg-sage/50"
-                animate={{ y: [0, 12, 0], opacity: [0.3, 0.8, 0.3] }}
-                transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
-            />
-            <motion.div
-                className="absolute bottom-[15%] right-[20%] w-2.5 h-2.5 rounded-full bg-tosca/45"
-                animate={{ y: [0, -16, 0], opacity: [0.35, 0.85, 0.35] }}
-                transition={{ duration: 4.8, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-            />
+            {/* Constellation: Dots + Traveling Line */}
+            <div className="absolute inset-0 w-full h-full pointer-events-none z-0">
+                {/* Dots */}
+                {constellationDots.map((dot, index) => {
+                    const isActive = index === activeLine || index === (activeLine + 1) % constellationDots.length;
+                    return (
+                        <motion.div
+                            key={dot.id}
+                            className="absolute rounded-full"
+                            style={{
+                                left: dot.x,
+                                top: dot.y,
+                                width: dot.size,
+                                height: dot.size,
+                                backgroundColor: dot.outline ? "transparent" : dot.color,
+                                border: dot.outline ? `2px solid ${dot.color}` : "none",
+                            }}
+                            animate={{
+                                opacity: isActive ? 0.9 : 0.35,
+                                y: [0, -8, 0],
+                                scale: isActive ? 1.3 : 1,
+                            }}
+                            transition={{
+                                opacity: { duration: 1, ease: "easeInOut" },
+                                scale: { duration: 1, ease: "easeInOut" },
+                                y: { duration: 4 + (index % 3), repeat: Infinity, ease: "easeInOut" },
+                            }}
+                        />
+                    );
+                })}
+
+                {/* Traveling Line (SVG) */}
+                <svg className="absolute inset-0 w-full h-full overflow-visible">
+                    <defs>
+                        <mask id="center-mask">
+                            <rect width="100%" height="100%" fill="white" />
+                            <ellipse cx="50%" cy="50%" rx="35%" ry="30%" fill="url(#soft-gradient)" />
+                        </mask>
+                        <radialGradient id="soft-gradient" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" stopColor="black" stopOpacity="1" />
+                            <stop offset="60%" stopColor="black" stopOpacity="0.8" />
+                            <stop offset="100%" stopColor="black" stopOpacity="0" />
+                        </radialGradient>
+                    </defs>
+                    <motion.line
+                        key={`line-${activeLine}`}
+                        x1={currentDot.x}
+                        y1={currentDot.y}
+                        x2={nextDot.x}
+                        y2={nextDot.y}
+                        stroke={nextDot.color}
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        mask="url(#center-mask)"
+                        initial={{ pathLength: 0, opacity: 0 }}
+                        animate={{ pathLength: 1, opacity: [0, 0.5, 0.5, 0] }}
+                        transition={{ duration: 2.8, ease: "easeInOut" }}
+                    />
+                </svg>
+            </div>
 
             <div className="max-w-6xl mx-auto px-6 py-32 text-center relative z-10">
                 {/* Name - Simple fade in, no per-character animation */}
