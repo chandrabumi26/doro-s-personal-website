@@ -378,20 +378,6 @@ function useStoryPages(onOpenPopup: (p: typeof projects[0], i: number) => void):
           <p className="text-lg md:text-xl text-charcoal/50 mt-6 max-w-2xl leading-relaxed font-medium">
             <AnimatedText text="A developer building intelligent digital experiences." delay={1.0} stagger={0.06} />
           </p>
-
-          <motion.div 
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.5, duration: 0.8 }}
-            className="mt-12 flex flex-col items-center gap-3 bg-tosca/5 px-6 py-4 rounded-2xl border border-tosca/10 max-w-md mx-auto"
-          >
-            <div className="w-8 h-8 rounded-full bg-tosca/20 flex items-center justify-center text-tosca-dark">
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" /></svg>
-            </div>
-            <p className="text-sm text-charcoal/70">
-              For the best experience, please put your headphones on. Instrumental music will play as you continue.
-            </p>
-          </motion.div>
         </div>
       ),
     },
@@ -679,7 +665,7 @@ function useStoryPages(onOpenPopup: (p: typeof projects[0], i: number) => void):
 
 // ─── Main StoryFlow ──────────────────────────────────────────────────────────
 
-export default function StoryFlow({ onMusicStart }: { onMusicStart?: () => void }) {
+export default function StoryFlow() {
   const [currentPage, setCurrentPage] = useState(0);
   const [direction, setDirection] = useState(0);
   const [popupProject, setPopupProject] = useState<typeof projects[0] | null>(null);
@@ -695,12 +681,9 @@ export default function StoryFlow({ onMusicStart }: { onMusicStart?: () => void 
 
   const goNext = useCallback(() => {
     if (isLastPage) return;
-    if (isFirstPage && onMusicStart) {
-      onMusicStart();
-    }
     setDirection(1);
     setCurrentPage((p) => p + 1);
-  }, [isLastPage, isFirstPage, onMusicStart]);
+  }, [isLastPage]);
 
   const goPrev = useCallback(() => {
     if (isFirstPage) return;
