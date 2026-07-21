@@ -1,4 +1,4 @@
-import MusicPlayer from "../components/MusicPlayer";
+import React from "react";
 
 export default function LegacyLayout({
   children,
@@ -6,9 +6,8 @@ export default function LegacyLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <>
-      <MusicPlayer />
+    <div className="bg-cream min-h-screen">
       {children}
-    </>
+    </div>
   );
 }

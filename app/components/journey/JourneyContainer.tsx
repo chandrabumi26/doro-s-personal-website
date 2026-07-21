@@ -62,7 +62,7 @@ export default function JourneyContainer() {
               </p>
               <motion.button
                 onClick={handleStartStory}
-                className="mt-4 px-8 py-3 bg-tosca text-soft-white rounded-full font-semibold shadow-lg hover:bg-tosca-dark transition-colors flex items-center gap-2"
+                className="mt-4 px-8 py-3 bg-tosca text-soft-white rounded-full font-semibold shadow-lg hover:bg-tosca-dark transition-colors flex items-center gap-2 cursor-pointer"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >

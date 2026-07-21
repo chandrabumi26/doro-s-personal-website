@@ -54,7 +54,7 @@ const projects = [
     title: "Mbizmarket",
     company: "Mbizmarket.co.id",
     role: "Frontend Developer",
-    period: "2024 - Present",
+    period: "2024 - 2026",
     description:
       "An e-procurement platform for local governments. I revamped legacy PHP modules into modern Next.js, implemented government integrations, and migrated to App Router for better performance.",
     logo: "/projects/mbizmarket/logo.png",
@@ -347,6 +347,15 @@ type StoryPage = {
   id: string;
   render: () => React.ReactNode;
 };
+const growthItems = [
+  { label: "Responsive Design", desc: "Building interfaces that adapt seamlessly across all screen sizes — from mobile to ultra-wide displays — ensuring a consistent user experience everywhere." },
+  { label: "Performance Optimization", desc: "Reducing load times, minimizing bundle sizes, and implementing lazy loading strategies to deliver fast, efficient web applications." },
+  { label: "Clean Code", desc: "Writing readable, well-structured, and maintainable code with clear naming conventions, solid architecture patterns, and thorough documentation." },
+  { label: "Agile / Scrum", desc: "Working effectively in sprint-based teams with daily standups, retrospectives, and iterative delivery to ship features on schedule." },
+  { label: "CI/CD", desc: "Setting up automated build pipelines, continuous integration workflows, and streamlined deployment processes to ensure reliable releases." },
+  { label: "Git", desc: "Managing complex branching strategies, conducting code reviews, resolving merge conflicts, and maintaining clean commit histories across teams." },
+  { label: "Problem Solving", desc: "Breaking down complex challenges into manageable pieces, debugging tricky issues, and finding creative solutions under tight deadlines." },
+];
 
 function useStoryPages(onOpenPopup: (p: typeof projects[0], i: number) => void): StoryPage[] {
   return [
@@ -530,7 +539,53 @@ function useStoryPages(onOpenPopup: (p: typeof projects[0], i: number) => void):
       ),
     },
 
-    // ── Page 7: Projects Intro ──
+    // ── Page 7: Practices I Live By (Part 1) ──
+    {
+      id: "practices-1",
+      render: () => (
+        <div className="flex flex-col items-center justify-center min-h-full py-24 px-6 text-center">
+          <p className="text-2xl md:text-4xl font-bold text-charcoal leading-snug max-w-3xl">
+            <AnimatedText
+              text="I believe in building interfaces that adapt seamlessly to any device."
+              delay={0.2}
+              stagger={0.04}
+            />
+          </p>
+          <p className="text-lg md:text-xl text-charcoal/60 mt-8 max-w-3xl leading-relaxed">
+            <AnimatedText
+              text="But looking good isn't enough—performance is key. I optimize load times and minimize bundle sizes to deliver fast, efficient experiences. Underneath it all is clean, maintainable code, built on solid architecture patterns."
+              delay={1.0}
+              stagger={0.03}
+            />
+          </p>
+        </div>
+      ),
+    },
+
+    // ── Page 8: Practices I Live By (Part 2) ──
+    {
+      id: "practices-2",
+      render: () => (
+        <div className="flex flex-col items-center justify-center min-h-full py-24 px-6 text-center">
+          <p className="text-2xl md:text-4xl font-bold text-charcoal leading-snug max-w-3xl">
+            <AnimatedText
+              text="Collaboration and reliability are just as important as the code itself."
+              delay={0.2}
+              stagger={0.04}
+            />
+          </p>
+          <p className="text-lg md:text-xl text-charcoal/60 mt-8 max-w-3xl leading-relaxed">
+            <AnimatedText
+              text="I thrive in Agile teams, iterating quickly to deliver features on schedule. By setting up robust CI/CD pipelines and maintaining clean Git histories, I ensure smooth releases. And when challenges arise, I break them down to find creative solutions."
+              delay={1.2}
+              stagger={0.03}
+            />
+          </p>
+        </div>
+      ),
+    },
+
+    // ── Page 8: Projects Intro ──
     {
       id: "projects-intro",
       render: () => (
@@ -632,22 +687,34 @@ function useStoryPages(onOpenPopup: (p: typeof projects[0], i: number) => void):
             ))}
           </motion.div>
 
-          <motion.a
-            href="/pdf/CV-Dorojatun-Chandrabumi.pdf"
-            download
-            className="inline-flex items-center gap-2 px-8 py-4 bg-tosca text-soft-white rounded-full font-semibold shadow-xl shadow-tosca/20 hover:bg-tosca-dark transition-colors duration-300"
+          <motion.div
+            className="flex flex-col sm:flex-row gap-4 mt-8"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.8 }}
-            whileHover={{ scale: 1.03, y: -2 }}
-            whileTap={{ scale: 0.97 }}
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-            </svg>
-            Download CV
-          </motion.a>
+            <a
+              href="/pdf/CV-Dorojatun-Chandrabumi.pdf"
+              download
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-tosca text-soft-white rounded-full font-semibold shadow-xl shadow-tosca/20 hover:bg-tosca-dark transition-colors duration-300"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                  d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+              Download CV
+            </a>
+
+            <button
+              onClick={() => window.location.reload()}
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-soft-white text-charcoal rounded-full font-semibold border border-charcoal/10 hover:bg-charcoal/5 transition-colors duration-300 cursor-pointer"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+              </svg>
+              Back to Landing
+            </button>
+          </motion.div>
 
           <motion.p
             className="mt-16 text-xs text-charcoal/30 tracking-wide"
@@ -938,7 +1005,7 @@ export default function StoryFlow() {
                     e.stopPropagation();
                     setPopupImgIndex((prev) => (prev === 0 ? popupProject.screenshots!.length - 1 : prev - 1));
                   }}
-                  className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 rounded-full bg-soft-white/80 hover:bg-soft-white shadow-lg flex items-center justify-center text-charcoal transition-colors border border-charcoal/10 z-10"
+                  className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 rounded-full bg-soft-white/80 hover:bg-soft-white shadow-lg flex items-center justify-center text-charcoal transition-colors border border-charcoal/10 z-10 cursor-pointer"
                 >
                   <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -953,7 +1020,7 @@ export default function StoryFlow() {
                     e.stopPropagation();
                     setPopupImgIndex((prev) => (prev === popupProject.screenshots!.length - 1 ? 0 : prev + 1));
                   }}
-                  className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 rounded-full bg-soft-white/80 hover:bg-soft-white shadow-lg flex items-center justify-center text-charcoal transition-colors border border-charcoal/10 z-10"
+                  className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 rounded-full bg-soft-white/80 hover:bg-soft-white shadow-lg flex items-center justify-center text-charcoal transition-colors border border-charcoal/10 z-10 cursor-pointer"
                 >
                   <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -964,7 +1031,7 @@ export default function StoryFlow() {
               {/* Close Button */}
               <button
                 onClick={() => setPopupProject(null)}
-                className="absolute -top-3 -right-3 md:-top-4 md:-right-4 w-10 h-10 rounded-full bg-soft-white shadow-lg flex items-center justify-center text-charcoal hover:bg-cream transition-colors border border-charcoal/10 z-20"
+                className="absolute -top-3 -right-3 md:-top-4 md:-right-4 w-10 h-10 rounded-full bg-soft-white shadow-lg flex items-center justify-center text-charcoal hover:bg-cream transition-colors border border-charcoal/10 z-20 cursor-pointer"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
