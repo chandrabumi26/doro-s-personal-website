@@ -794,7 +794,6 @@ export default function StoryFlow() {
 
     const handleWheel = (e: WheelEvent) => {
       if (document.querySelector('.popup-active')) return;
-      if (isFirstPage) return;
       if (isNavigating) return;
       const container = getActiveContainer();
       if (!container) return;
@@ -830,7 +829,6 @@ export default function StoryFlow() {
 
     const handleTouchEnd = (e: TouchEvent) => {
       if (document.querySelector('.popup-active')) return;
-      if (isFirstPage) return;
       if (isNavigating) return;
       touchEndY = e.changedTouches[0].clientY;
       const container = getActiveContainer();
