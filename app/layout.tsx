@@ -17,11 +17,11 @@ const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://dorojatunchandrabum
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   title: {
-    default: "Dorojatun Chandrabumi | Frontend Developer",
+    default: "Dorojatun Chandrabumi | Software Engineer",
     template: "%s | Dorojatun Chandrabumi"
   },
   description:
-    "Frontend Developer with 4+ years of experience in React, Next.js, Vue.js, TypeScript, and Tailwind CSS. Creating beautiful, responsive web experiences.",
+    "Software Engineer with 5 Years focus in frontend in React, Next.js, Vue.js, TypeScript, and Tailwind CSS. Creating beautiful, responsive web experiences.",
   keywords: [
     "Frontend Developer",
     "React",
@@ -39,10 +39,15 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/',
   },
+  icons: {
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
+    apple: '/favicon.ico',
+  },
   openGraph: {
-    title: "Dorojatun Chandrabumi | Frontend Developer",
+    title: "Dorojatun Chandrabumi | Software Engineer",
     description:
-      "Frontend Developer with 4+ years of experience crafting beautiful web experiences.",
+      "Software Engineer with 5 Years focus in frontend, crafting beautiful web experiences.",
     url: baseUrl,
     siteName: "Dorojatun Chandrabumi Portfolio",
     locale: "en_US",
