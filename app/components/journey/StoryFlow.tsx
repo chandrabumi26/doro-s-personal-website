@@ -183,7 +183,7 @@ function AnimatedText({
 
 // ─── Project Slide Component ─────────────────────────────────────────────────
 
-function ProjectSlide({ project }: { project: typeof projects[0] }) {
+function ProjectSlide({ project, onOpenPopup }: { project: typeof projects[0], onOpenPopup: (p: typeof projects[0], i: number) => void }) {
   const [currentImg, setCurrentImg] = useState(0);
 
   useEffect(() => {
@@ -195,7 +195,8 @@ function ProjectSlide({ project }: { project: typeof projects[0] }) {
   }, [project.screenshots]);
 
   return (
-    <div className="flex flex-col justify-center min-h-full px-6 py-24 md:py-12">
+    <>
+      <div className="flex flex-col justify-center min-h-full px-6 py-24 md:py-12">
       <div className="max-w-6xl w-full mx-auto flex flex-col lg:flex-row gap-10 items-center justify-center">
         {/* Info Side */}
         <div className="flex-1 max-w-lg w-full">
@@ -283,7 +284,15 @@ function ProjectSlide({ project }: { project: typeof projects[0] }) {
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.6, duration: 0.6 }}
         >
-          <div className="relative aspect-[16/10] w-full bg-charcoal/5 rounded-2xl overflow-hidden border border-charcoal/10 shadow-2xl">
+          {project.screenshots && (
+              <motion.div
+                className="relative w-full aspect-[16/10] rounded-2xl overflow-hidden shadow-2xl border border-charcoal/10 bg-soft-white group cursor-default md:cursor-zoom-in pointer-events-none md:pointer-events-auto"
+                onClick={() => {
+                  if (project.screenshots) {
+                    onOpenPopup(project, currentImg);
+                  }
+                }}
+              >
             {project.screenshots && project.screenshots.length > 0 ? (
               <AnimatePresence mode="wait">
                 <motion.div
@@ -321,10 +330,13 @@ function ProjectSlide({ project }: { project: typeof projects[0] }) {
                 ))}
               </div>
             )}
-          </div>
+          </motion.div>
+          )}
         </motion.div>
       </div>
     </div>
+
+    </>
   );
 }
 
@@ -336,7 +348,7 @@ type StoryPage = {
   render: () => React.ReactNode;
 };
 
-function useStoryPages(): StoryPage[] {
+function useStoryPages(onOpenPopup: (p: typeof projects[0], i: number) => void): StoryPage[] {
   return [
     // ── Page 1: Introduction ──
     {
@@ -366,6 +378,20 @@ function useStoryPages(): StoryPage[] {
           <p className="text-lg md:text-xl text-charcoal/50 mt-6 max-w-2xl leading-relaxed font-medium">
             <AnimatedText text="A developer building intelligent digital experiences." delay={1.0} stagger={0.06} />
           </p>
+
+          <motion.div 
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.5, duration: 0.8 }}
+            className="mt-12 flex flex-col items-center gap-3 bg-tosca/5 px-6 py-4 rounded-2xl border border-tosca/10 max-w-md mx-auto"
+          >
+            <div className="w-8 h-8 rounded-full bg-tosca/20 flex items-center justify-center text-tosca-dark">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" /></svg>
+            </div>
+            <p className="text-sm text-charcoal/70">
+              For the best experience, please put your headphones on. Instrumental music will play as you continue.
+            </p>
+          </motion.div>
         </div>
       ),
     },
@@ -542,10 +568,26 @@ function useStoryPages(): StoryPage[] {
     },
 
     // ── Pages 8-12: Individual Projects ──
-    ...projects.map((project, idx) => ({
-      id: `project-${idx}`,
-      render: () => <ProjectSlide project={project} />
-    })),
+    {
+      id: "project-1",
+      render: () => <ProjectSlide project={projects[0]} onOpenPopup={onOpenPopup} />,
+    },
+    {
+      id: "project-2",
+      render: () => <ProjectSlide project={projects[1]} onOpenPopup={onOpenPopup} />,
+    },
+    {
+      id: "project-3",
+      render: () => <ProjectSlide project={projects[2]} onOpenPopup={onOpenPopup} />,
+    },
+    {
+      id: "project-4",
+      render: () => <ProjectSlide project={projects[3]} onOpenPopup={onOpenPopup} />,
+    },
+    {
+      id: "project-5",
+      render: () => <ProjectSlide project={projects[4]} onOpenPopup={onOpenPopup} />,
+    },
 
     // ── Page 13: Connect ──
     {
@@ -637,20 +679,28 @@ function useStoryPages(): StoryPage[] {
 
 // ─── Main StoryFlow ──────────────────────────────────────────────────────────
 
-export default function StoryFlow() {
-  const pages = useStoryPages();
+export default function StoryFlow({ onMusicStart }: { onMusicStart?: () => void }) {
   const [currentPage, setCurrentPage] = useState(0);
-  const [direction, setDirection] = useState(1); // 1 = forward, -1 = back
+  const [direction, setDirection] = useState(0);
+  const [popupProject, setPopupProject] = useState<typeof projects[0] | null>(null);
+  const [popupImgIndex, setPopupImgIndex] = useState(0);
 
+  const pages = useStoryPages((project, imgIndex) => {
+    setPopupProject(project);
+    setPopupImgIndex(imgIndex);
+  });
   const totalPages = pages.length;
   const isLastPage = currentPage === totalPages - 1;
   const isFirstPage = currentPage === 0;
 
   const goNext = useCallback(() => {
     if (isLastPage) return;
+    if (isFirstPage && onMusicStart) {
+      onMusicStart();
+    }
     setDirection(1);
     setCurrentPage((p) => p + 1);
-  }, [isLastPage]);
+  }, [isLastPage, isFirstPage, onMusicStart]);
 
   const goPrev = useCallback(() => {
     if (isFirstPage) return;
@@ -689,11 +739,12 @@ export default function StoryFlow() {
     let isNavigating = false;
     let wasAtTopAtStart = false;
     let wasAtBottomAtStart = false;
-    let wheelAtBoundaryCount = 0;
 
     const getActiveContainer = () => document.querySelector('.story-page-container') as HTMLElement;
 
     const handleWheel = (e: WheelEvent) => {
+      if (document.querySelector('.popup-active')) return;
+      if (isFirstPage) return;
       if (isNavigating) return;
       const container = getActiveContainer();
       if (!container) return;
@@ -704,30 +755,21 @@ export default function StoryFlow() {
 
       if (e.deltaY > 0) {
         if (isAtBottom && !isLastPage) {
-          wheelAtBoundaryCount++;
-          if (wheelAtBoundaryCount > 5) { // Require multiple scroll ticks at the boundary
-            isNavigating = true;
-            goNext();
-            setTimeout(() => { isNavigating = false; wheelAtBoundaryCount = 0; }, 1200);
-          }
-        } else {
-          wheelAtBoundaryCount = 0;
+          isNavigating = true;
+          goNext();
+          setTimeout(() => { isNavigating = false; }, 1200);
         }
       } else if (e.deltaY < 0) {
         if (isAtTop && !isFirstPage) {
-          wheelAtBoundaryCount++;
-          if (wheelAtBoundaryCount > 5) {
-            isNavigating = true;
-            goPrev();
-            setTimeout(() => { isNavigating = false; wheelAtBoundaryCount = 0; }, 1200);
-          }
-        } else {
-          wheelAtBoundaryCount = 0;
+          isNavigating = true;
+          goPrev();
+          setTimeout(() => { isNavigating = false; }, 1200);
         }
       }
     };
 
     const handleTouchStart = (e: TouchEvent) => {
+      if (document.querySelector('.popup-active')) return;
       touchStartY = e.touches[0].clientY;
       const container = getActiveContainer();
       if (container) {
@@ -737,6 +779,8 @@ export default function StoryFlow() {
     };
 
     const handleTouchEnd = (e: TouchEvent) => {
+      if (document.querySelector('.popup-active')) return;
+      if (isFirstPage) return;
       if (isNavigating) return;
       touchEndY = e.changedTouches[0].clientY;
       const container = getActiveContainer();
@@ -748,11 +792,11 @@ export default function StoryFlow() {
       const deltaY = touchStartY - touchEndY;
       
       // Only navigate if they started the swipe at the boundary AND are still at the boundary
-      if (deltaY > 60 && wasAtBottomAtStart && isAtBottomNow && !isLastPage) {
+      if (deltaY > 40 && wasAtBottomAtStart && isAtBottomNow && !isLastPage) {
         isNavigating = true;
         goNext();
         setTimeout(() => isNavigating = false, 1200);
-      } else if (deltaY < -60 && wasAtTopAtStart && isAtTopNow && !isFirstPage) {
+      } else if (deltaY < -40 && wasAtTopAtStart && isAtTopNow && !isFirstPage) {
         isNavigating = true;
         goPrev();
         setTimeout(() => isNavigating = false, 1200);
@@ -864,6 +908,103 @@ export default function StoryFlow() {
           </motion.button>
         </div>
       </div>
+
+      {/* Global Image Popup (Rendered above everything) */}
+      <AnimatePresence>
+        {popupProject && popupProject.screenshots && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setPopupProject(null)}
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-charcoal/60 backdrop-blur-sm p-4 md:p-8 cursor-zoom-out popup-active"
+          >
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.95, opacity: 0, y: 20 }}
+              transition={{ type: "spring", damping: 30, stiffness: 300 }}
+              className="relative w-full max-w-5xl bg-soft-white rounded-2xl shadow-2xl p-2 md:p-4 cursor-default"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Image Container */}
+              <div className="relative w-full aspect-[4/3] md:aspect-[16/10] bg-charcoal/5 rounded-xl overflow-hidden flex items-center justify-center">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={popupImgIndex}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20 }}
+                    transition={{ duration: 0.3 }}
+                    className="relative w-full h-full"
+                  >
+                    <Image
+                      src={popupProject.screenshots[popupImgIndex]}
+                      alt={`${popupProject.company} screenshot ${popupImgIndex + 1}`}
+                      fill
+                      className="object-contain"
+                    />
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+
+              {/* Prev Button */}
+              {popupProject.screenshots.length > 1 && (
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setPopupImgIndex((prev) => (prev === 0 ? popupProject.screenshots!.length - 1 : prev - 1));
+                  }}
+                  className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 rounded-full bg-soft-white/80 hover:bg-soft-white shadow-lg flex items-center justify-center text-charcoal transition-colors border border-charcoal/10 z-10"
+                >
+                  <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                  </svg>
+                </button>
+              )}
+
+              {/* Next Button */}
+              {popupProject.screenshots.length > 1 && (
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setPopupImgIndex((prev) => (prev === popupProject.screenshots!.length - 1 ? 0 : prev + 1));
+                  }}
+                  className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 rounded-full bg-soft-white/80 hover:bg-soft-white shadow-lg flex items-center justify-center text-charcoal transition-colors border border-charcoal/10 z-10"
+                >
+                  <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
+              )}
+
+              {/* Close Button */}
+              <button
+                onClick={() => setPopupProject(null)}
+                className="absolute -top-3 -right-3 md:-top-4 md:-right-4 w-10 h-10 rounded-full bg-soft-white shadow-lg flex items-center justify-center text-charcoal hover:bg-cream transition-colors border border-charcoal/10 z-20"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+
+              {/* Carousel Indicators */}
+              {popupProject.screenshots.length > 1 && (
+                <div className="absolute bottom-6 md:bottom-8 left-0 right-0 flex justify-center gap-2 z-10">
+                  {popupProject.screenshots.map((_, i) => (
+                    <div
+                      key={i}
+                      className={`w-2 h-2 rounded-full transition-all duration-300 shadow-sm ${
+                        i === popupImgIndex ? "bg-tosca w-6" : "bg-charcoal/20"
+                      }`}
+                    />
+                  ))}
+                </div>
+              )}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

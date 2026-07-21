@@ -9,6 +9,7 @@ import JourneyMusic from "./JourneyMusic";
 export default function JourneyContainer() {
   const [journeyStarted, setJourneyStarted] = useState(false);
   const [showLanding, setShowLanding] = useState(true);
+  const [musicStarted, setMusicStarted] = useState(false);
 
   const handleEnterJourney = useCallback(() => {
     setJourneyStarted(true);
@@ -19,7 +20,7 @@ export default function JourneyContainer() {
 
   return (
     <>
-      <JourneyMusic shouldPlay={journeyStarted} />
+      <JourneyMusic shouldPlay={musicStarted} />
 
       <AnimatePresence mode="wait">
         {showLanding ? (
@@ -42,7 +43,7 @@ export default function JourneyContainer() {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, ease: [0.25, 0.4, 0.25, 1] }}
           >
-            <StoryFlow />
+            <StoryFlow onMusicStart={() => setMusicStarted(true)} />
           </motion.div>
         )}
       </AnimatePresence>
