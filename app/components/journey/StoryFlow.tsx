@@ -195,8 +195,8 @@ function ProjectSlide({ project }: { project: typeof projects[0] }) {
   }, [project.screenshots]);
 
   return (
-    <div className="flex items-center justify-center h-full px-6 py-12">
-      <div className="max-w-6xl w-full h-full flex flex-col lg:flex-row gap-10 items-center justify-center">
+    <div className="flex flex-col justify-center min-h-full px-6 py-24 md:py-12">
+      <div className="max-w-6xl w-full mx-auto flex flex-col lg:flex-row gap-10 items-center justify-center">
         {/* Info Side */}
         <div className="flex-1 max-w-lg w-full">
           <div className="flex items-start gap-6 mb-6">
@@ -342,7 +342,7 @@ function useStoryPages(): StoryPage[] {
     {
       id: "intro-1",
       render: () => (
-        <div className="flex flex-col items-center justify-center h-full px-6 text-center">
+        <div className="flex flex-col items-center justify-center min-h-full py-24 px-6 text-center">
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -374,7 +374,7 @@ function useStoryPages(): StoryPage[] {
     {
       id: "intro-2",
       render: () => (
-        <div className="flex flex-col items-center justify-center h-full px-6 text-center">
+        <div className="flex flex-col items-center justify-center min-h-full py-24 px-6 text-center">
           <p className="text-2xl md:text-4xl font-bold text-charcoal leading-snug max-w-4xl">
             <AnimatedText
               text="Recently, my curiosity has led me deep into Agentic AI and business automation."
@@ -397,7 +397,7 @@ function useStoryPages(): StoryPage[] {
     {
       id: "interests",
       render: () => (
-        <div className="flex flex-col items-center justify-center h-full px-6 text-center">
+        <div className="flex flex-col items-center justify-center min-h-full py-24 px-6 text-center">
           <p className="text-2xl md:text-4xl font-bold text-charcoal leading-snug max-w-3xl">
             <AnimatedText
               text="When I'm not coding, I'm probably reading about world history, especially World War II, or nuclear science."
@@ -420,7 +420,7 @@ function useStoryPages(): StoryPage[] {
     {
       id: "tech-front",
       render: () => (
-        <div className="flex flex-col items-center justify-center h-full px-6">
+        <div className="flex flex-col items-center justify-center min-h-full py-24 px-6">
           <p className="text-2xl md:text-4xl font-bold text-charcoal text-center mb-8 max-w-3xl">
             <AnimatedText text="For the frontend, I build highly interactive and SEO-friendly applications." delay={0.2} stagger={0.05} />
           </p>
@@ -454,7 +454,7 @@ function useStoryPages(): StoryPage[] {
     {
       id: "tech-back",
       render: () => (
-        <div className="flex flex-col items-center justify-center h-full px-6">
+        <div className="flex flex-col items-center justify-center min-h-full py-24 px-6">
           <p className="text-2xl md:text-4xl font-bold text-charcoal text-center mb-8 max-w-3xl">
             <AnimatedText text="On the backend, I build robust APIs and handle complex logic." delay={0.2} stagger={0.05} />
           </p>
@@ -488,7 +488,7 @@ function useStoryPages(): StoryPage[] {
     {
       id: "tech-mobile",
       render: () => (
-        <div className="flex flex-col items-center justify-center h-full px-6">
+        <div className="flex flex-col items-center justify-center min-h-full py-24 px-6">
           <p className="text-2xl md:text-4xl font-bold text-charcoal text-center mb-8 max-w-3xl">
             <AnimatedText text="And when an experience needs to reach native devices..." delay={0.2} stagger={0.05} />
           </p>
@@ -522,7 +522,7 @@ function useStoryPages(): StoryPage[] {
     {
       id: "projects-intro",
       render: () => (
-        <div className="flex flex-col items-center justify-center h-full px-6 text-center">
+        <div className="flex flex-col items-center justify-center min-h-full py-24 px-6 text-center">
           <p className="text-2xl md:text-4xl font-bold text-charcoal leading-snug max-w-3xl">
             <AnimatedText
               text="Let me show you what I've been working on."
@@ -551,7 +551,7 @@ function useStoryPages(): StoryPage[] {
     {
       id: "connect",
       render: () => (
-        <div className="flex flex-col items-center justify-center h-full px-6 text-center">
+        <div className="flex flex-col items-center justify-center min-h-full py-24 px-6 text-center">
           <h2 className="text-3xl md:text-5xl font-bold text-charcoal mb-10 max-w-2xl">
             <AnimatedText text="Let's build something together." delay={0.2} stagger={0.1} />
           </h2>
@@ -679,6 +679,97 @@ export default function StoryFlow() {
     }),
   };
 
+  // Scroll and swipe to navigate
+  useEffect(() => {
+    const wrapper = document.getElementById('story-wrapper');
+    if (!wrapper) return;
+
+    let touchStartY = 0;
+    let touchEndY = 0;
+    let isNavigating = false;
+    let wasAtTopAtStart = false;
+    let wasAtBottomAtStart = false;
+    let wheelAtBoundaryCount = 0;
+
+    const getActiveContainer = () => document.querySelector('.story-page-container') as HTMLElement;
+
+    const handleWheel = (e: WheelEvent) => {
+      if (isNavigating) return;
+      const container = getActiveContainer();
+      if (!container) return;
+
+      const { scrollTop, scrollHeight, clientHeight } = container;
+      const isAtTop = scrollTop <= 1;
+      const isAtBottom = Math.abs(scrollHeight - clientHeight - scrollTop) <= 2;
+
+      if (e.deltaY > 0) {
+        if (isAtBottom && !isLastPage) {
+          wheelAtBoundaryCount++;
+          if (wheelAtBoundaryCount > 5) { // Require multiple scroll ticks at the boundary
+            isNavigating = true;
+            goNext();
+            setTimeout(() => { isNavigating = false; wheelAtBoundaryCount = 0; }, 1200);
+          }
+        } else {
+          wheelAtBoundaryCount = 0;
+        }
+      } else if (e.deltaY < 0) {
+        if (isAtTop && !isFirstPage) {
+          wheelAtBoundaryCount++;
+          if (wheelAtBoundaryCount > 5) {
+            isNavigating = true;
+            goPrev();
+            setTimeout(() => { isNavigating = false; wheelAtBoundaryCount = 0; }, 1200);
+          }
+        } else {
+          wheelAtBoundaryCount = 0;
+        }
+      }
+    };
+
+    const handleTouchStart = (e: TouchEvent) => {
+      touchStartY = e.touches[0].clientY;
+      const container = getActiveContainer();
+      if (container) {
+        wasAtTopAtStart = container.scrollTop <= 1;
+        wasAtBottomAtStart = Math.abs(container.scrollHeight - container.clientHeight - container.scrollTop) <= 2;
+      }
+    };
+
+    const handleTouchEnd = (e: TouchEvent) => {
+      if (isNavigating) return;
+      touchEndY = e.changedTouches[0].clientY;
+      const container = getActiveContainer();
+      if (!container) return;
+
+      const isAtTopNow = container.scrollTop <= 1;
+      const isAtBottomNow = Math.abs(container.scrollHeight - container.clientHeight - container.scrollTop) <= 2;
+      
+      const deltaY = touchStartY - touchEndY;
+      
+      // Only navigate if they started the swipe at the boundary AND are still at the boundary
+      if (deltaY > 60 && wasAtBottomAtStart && isAtBottomNow && !isLastPage) {
+        isNavigating = true;
+        goNext();
+        setTimeout(() => isNavigating = false, 1200);
+      } else if (deltaY < -60 && wasAtTopAtStart && isAtTopNow && !isFirstPage) {
+        isNavigating = true;
+        goPrev();
+        setTimeout(() => isNavigating = false, 1200);
+      }
+    };
+
+    wrapper.addEventListener('wheel', handleWheel, { passive: true });
+    wrapper.addEventListener('touchstart', handleTouchStart, { passive: true });
+    wrapper.addEventListener('touchend', handleTouchEnd, { passive: true });
+
+    return () => {
+      wrapper.removeEventListener('wheel', handleWheel);
+      wrapper.removeEventListener('touchstart', handleTouchStart);
+      wrapper.removeEventListener('touchend', handleTouchEnd);
+    };
+  }, [isFirstPage, isLastPage, goNext, goPrev]);
+
   return (
     <div className="h-full w-full relative flex flex-col" style={{ background: "var(--cream)" }}>
       {/* Ambient background blobs */}
@@ -696,7 +787,7 @@ export default function StoryFlow() {
       />
 
       {/* Story content area */}
-      <div className="flex-1 relative overflow-hidden">
+      <div id="story-wrapper" className="flex-1 relative overflow-hidden">
         <AnimatePresence mode="wait" custom={direction}>
           <motion.div
             key={pages[currentPage].id}
@@ -706,7 +797,7 @@ export default function StoryFlow() {
             animate="center"
             exit="exit"
             transition={{ duration: 0.45, ease: [0.25, 0.4, 0.25, 1] }}
-            className="absolute inset-0"
+            className="story-page-container absolute inset-0 overflow-y-auto overflow-x-hidden journey-scroll"
           >
             {pages[currentPage].render()}
           </motion.div>
@@ -714,24 +805,26 @@ export default function StoryFlow() {
       </div>
 
       {/* Bottom bar: progress + navigation */}
-      <div className="relative z-20 px-6 py-5 flex items-center justify-between">
+      <div className="relative z-20 px-6 py-5 flex items-center justify-center md:justify-between">
         {/* Back button */}
-        <motion.button
-          onClick={goPrev}
-          disabled={isFirstPage}
-          className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 cursor-pointer ${
-            isFirstPage
-              ? "opacity-0 pointer-events-none"
-              : "text-charcoal/60 hover:text-charcoal bg-charcoal/5 hover:bg-charcoal/10"
-          }`}
-          whileHover={!isFirstPage ? { x: -3 } : undefined}
-          whileTap={!isFirstPage ? { scale: 0.95 } : undefined}
-        >
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-          </svg>
-          Back
-        </motion.button>
+        <div className="hidden md:block">
+          <motion.button
+            onClick={goPrev}
+            disabled={isFirstPage}
+            className={`flex items-center gap-1 sm:gap-2 px-3 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-medium transition-all duration-300 cursor-pointer ${
+              isFirstPage
+                ? "opacity-0 pointer-events-none"
+                : "text-charcoal/60 hover:text-charcoal bg-charcoal/5 hover:bg-charcoal/10"
+            }`}
+            whileHover={!isFirstPage ? { x: -3 } : undefined}
+            whileTap={!isFirstPage ? { scale: 0.95 } : undefined}
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+            Back
+          </motion.button>
+        </div>
 
         {/* Progress dots */}
         <div className="flex items-center gap-1.5">
@@ -740,10 +833,10 @@ export default function StoryFlow() {
               key={i}
               className={`rounded-full transition-all duration-400 ${
                 i === currentPage
-                  ? "w-6 h-2 bg-tosca"
+                  ? "w-4 sm:w-6 h-1.5 sm:h-2 bg-tosca"
                   : i < currentPage
-                  ? "w-2 h-2 bg-tosca/40"
-                  : "w-2 h-2 bg-charcoal/15"
+                  ? "w-1.5 sm:w-2 h-1.5 sm:h-2 bg-tosca/40"
+                  : "w-1.5 sm:w-2 h-1.5 sm:h-2 bg-charcoal/15"
               }`}
               layout
               transition={{ type: "spring", stiffness: 300, damping: 25 }}
@@ -752,22 +845,24 @@ export default function StoryFlow() {
         </div>
 
         {/* Next button */}
-        <motion.button
-          onClick={goNext}
-          disabled={isLastPage}
-          className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 cursor-pointer ${
-            isLastPage
-              ? "opacity-0 pointer-events-none"
-              : "bg-tosca text-soft-white hover:bg-tosca-dark shadow-lg shadow-tosca/20"
-          }`}
-          whileHover={!isLastPage ? { x: 3 } : undefined}
-          whileTap={!isLastPage ? { scale: 0.95 } : undefined}
-        >
-          Continue
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-          </svg>
-        </motion.button>
+        <div className="hidden md:block">
+          <motion.button
+            onClick={goNext}
+            disabled={isLastPage}
+            className={`flex items-center gap-1 sm:gap-2 px-3 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-300 cursor-pointer ${
+              isLastPage
+                ? "opacity-0 pointer-events-none"
+                : "bg-tosca text-soft-white hover:bg-tosca-dark shadow-lg shadow-tosca/20"
+            }`}
+            whileHover={!isLastPage ? { x: 3 } : undefined}
+            whileTap={!isLastPage ? { scale: 0.95 } : undefined}
+          >
+            Continue
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </motion.button>
+        </div>
       </div>
     </div>
   );
