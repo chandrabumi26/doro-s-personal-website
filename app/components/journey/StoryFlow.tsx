@@ -54,7 +54,7 @@ const projects = [
     title: "Mbizmarket",
     company: "Mbizmarket.co.id",
     role: "Frontend Developer",
-    period: "2024 - Present",
+    period: "2024 - 2026",
     description:
       "An e-procurement platform for local governments. I revamped legacy PHP modules into modern Next.js, implemented government integrations, and migrated to App Router for better performance.",
     logo: "/projects/mbizmarket/logo.png",
@@ -183,7 +183,7 @@ function AnimatedText({
 
 // ─── Project Slide Component ─────────────────────────────────────────────────
 
-function ProjectSlide({ project }: { project: typeof projects[0] }) {
+function ProjectSlide({ project, onOpenPopup }: { project: typeof projects[0], onOpenPopup: (p: typeof projects[0], i: number) => void }) {
   const [currentImg, setCurrentImg] = useState(0);
 
   useEffect(() => {
@@ -195,8 +195,9 @@ function ProjectSlide({ project }: { project: typeof projects[0] }) {
   }, [project.screenshots]);
 
   return (
-    <div className="flex items-center justify-center h-full px-6 py-12">
-      <div className="max-w-6xl w-full h-full flex flex-col lg:flex-row gap-10 items-center justify-center">
+    <>
+      <div className="flex flex-col justify-center min-h-full px-6 py-24 md:py-12">
+      <div className="max-w-6xl w-full mx-auto flex flex-col lg:flex-row gap-10 items-center justify-center">
         {/* Info Side */}
         <div className="flex-1 max-w-lg w-full">
           <div className="flex items-start gap-6 mb-6">
@@ -283,7 +284,15 @@ function ProjectSlide({ project }: { project: typeof projects[0] }) {
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.6, duration: 0.6 }}
         >
-          <div className="relative aspect-[16/10] w-full bg-charcoal/5 rounded-2xl overflow-hidden border border-charcoal/10 shadow-2xl">
+          {project.screenshots && (
+              <motion.div
+                className="relative w-full aspect-[16/10] rounded-2xl overflow-hidden shadow-2xl border border-charcoal/10 bg-soft-white group cursor-default md:cursor-zoom-in pointer-events-none md:pointer-events-auto"
+                onClick={() => {
+                  if (project.screenshots) {
+                    onOpenPopup(project, currentImg);
+                  }
+                }}
+              >
             {project.screenshots && project.screenshots.length > 0 ? (
               <AnimatePresence mode="wait">
                 <motion.div
@@ -321,10 +330,13 @@ function ProjectSlide({ project }: { project: typeof projects[0] }) {
                 ))}
               </div>
             )}
-          </div>
+          </motion.div>
+          )}
         </motion.div>
       </div>
     </div>
+
+    </>
   );
 }
 
@@ -335,14 +347,23 @@ type StoryPage = {
   id: string;
   render: () => React.ReactNode;
 };
+const growthItems = [
+  { label: "Responsive Design", desc: "Building interfaces that adapt seamlessly across all screen sizes — from mobile to ultra-wide displays — ensuring a consistent user experience everywhere." },
+  { label: "Performance Optimization", desc: "Reducing load times, minimizing bundle sizes, and implementing lazy loading strategies to deliver fast, efficient web applications." },
+  { label: "Clean Code", desc: "Writing readable, well-structured, and maintainable code with clear naming conventions, solid architecture patterns, and thorough documentation." },
+  { label: "Agile / Scrum", desc: "Working effectively in sprint-based teams with daily standups, retrospectives, and iterative delivery to ship features on schedule." },
+  { label: "CI/CD", desc: "Setting up automated build pipelines, continuous integration workflows, and streamlined deployment processes to ensure reliable releases." },
+  { label: "Git", desc: "Managing complex branching strategies, conducting code reviews, resolving merge conflicts, and maintaining clean commit histories across teams." },
+  { label: "Problem Solving", desc: "Breaking down complex challenges into manageable pieces, debugging tricky issues, and finding creative solutions under tight deadlines." },
+];
 
-function useStoryPages(): StoryPage[] {
+function useStoryPages(onOpenPopup: (p: typeof projects[0], i: number) => void): StoryPage[] {
   return [
     // ── Page 1: Introduction ──
     {
       id: "intro-1",
       render: () => (
-        <div className="flex flex-col items-center justify-center h-full px-6 text-center">
+        <div className="flex flex-col items-center justify-center min-h-full py-24 px-6 text-center">
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -374,7 +395,7 @@ function useStoryPages(): StoryPage[] {
     {
       id: "intro-2",
       render: () => (
-        <div className="flex flex-col items-center justify-center h-full px-6 text-center">
+        <div className="flex flex-col items-center justify-center min-h-full py-24 px-6 text-center">
           <p className="text-2xl md:text-4xl font-bold text-charcoal leading-snug max-w-4xl">
             <AnimatedText
               text="Recently, my curiosity has led me deep into Agentic AI and business automation."
@@ -397,7 +418,7 @@ function useStoryPages(): StoryPage[] {
     {
       id: "interests",
       render: () => (
-        <div className="flex flex-col items-center justify-center h-full px-6 text-center">
+        <div className="flex flex-col items-center justify-center min-h-full py-24 px-6 text-center">
           <p className="text-2xl md:text-4xl font-bold text-charcoal leading-snug max-w-3xl">
             <AnimatedText
               text="When I'm not coding, I'm probably reading about world history, especially World War II, or nuclear science."
@@ -420,7 +441,7 @@ function useStoryPages(): StoryPage[] {
     {
       id: "tech-front",
       render: () => (
-        <div className="flex flex-col items-center justify-center h-full px-6">
+        <div className="flex flex-col items-center justify-center min-h-full py-24 px-6">
           <p className="text-2xl md:text-4xl font-bold text-charcoal text-center mb-8 max-w-3xl">
             <AnimatedText text="For the frontend, I build highly interactive and SEO-friendly applications." delay={0.2} stagger={0.05} />
           </p>
@@ -454,7 +475,7 @@ function useStoryPages(): StoryPage[] {
     {
       id: "tech-back",
       render: () => (
-        <div className="flex flex-col items-center justify-center h-full px-6">
+        <div className="flex flex-col items-center justify-center min-h-full py-24 px-6">
           <p className="text-2xl md:text-4xl font-bold text-charcoal text-center mb-8 max-w-3xl">
             <AnimatedText text="On the backend, I build robust APIs and handle complex logic." delay={0.2} stagger={0.05} />
           </p>
@@ -488,7 +509,7 @@ function useStoryPages(): StoryPage[] {
     {
       id: "tech-mobile",
       render: () => (
-        <div className="flex flex-col items-center justify-center h-full px-6">
+        <div className="flex flex-col items-center justify-center min-h-full py-24 px-6">
           <p className="text-2xl md:text-4xl font-bold text-charcoal text-center mb-8 max-w-3xl">
             <AnimatedText text="And when an experience needs to reach native devices..." delay={0.2} stagger={0.05} />
           </p>
@@ -518,11 +539,57 @@ function useStoryPages(): StoryPage[] {
       ),
     },
 
-    // ── Page 7: Projects Intro ──
+    // ── Page 7: Practices I Live By (Part 1) ──
+    {
+      id: "practices-1",
+      render: () => (
+        <div className="flex flex-col items-center justify-center min-h-full py-24 px-6 text-center">
+          <p className="text-2xl md:text-4xl font-bold text-charcoal leading-snug max-w-3xl">
+            <AnimatedText
+              text="I believe in building interfaces that adapt seamlessly to any device."
+              delay={0.2}
+              stagger={0.04}
+            />
+          </p>
+          <p className="text-lg md:text-xl text-charcoal/60 mt-8 max-w-3xl leading-relaxed">
+            <AnimatedText
+              text="But looking good isn't enough—performance is key. I optimize load times and minimize bundle sizes to deliver fast, efficient experiences. Underneath it all is clean, maintainable code, built on solid architecture patterns."
+              delay={1.0}
+              stagger={0.03}
+            />
+          </p>
+        </div>
+      ),
+    },
+
+    // ── Page 8: Practices I Live By (Part 2) ──
+    {
+      id: "practices-2",
+      render: () => (
+        <div className="flex flex-col items-center justify-center min-h-full py-24 px-6 text-center">
+          <p className="text-2xl md:text-4xl font-bold text-charcoal leading-snug max-w-3xl">
+            <AnimatedText
+              text="Collaboration and reliability are just as important as the code itself."
+              delay={0.2}
+              stagger={0.04}
+            />
+          </p>
+          <p className="text-lg md:text-xl text-charcoal/60 mt-8 max-w-3xl leading-relaxed">
+            <AnimatedText
+              text="I thrive in Agile teams, iterating quickly to deliver features on schedule. By setting up robust CI/CD pipelines and maintaining clean Git histories, I ensure smooth releases. And when challenges arise, I break them down to find creative solutions."
+              delay={1.2}
+              stagger={0.03}
+            />
+          </p>
+        </div>
+      ),
+    },
+
+    // ── Page 8: Projects Intro ──
     {
       id: "projects-intro",
       render: () => (
-        <div className="flex flex-col items-center justify-center h-full px-6 text-center">
+        <div className="flex flex-col items-center justify-center min-h-full py-24 px-6 text-center">
           <p className="text-2xl md:text-4xl font-bold text-charcoal leading-snug max-w-3xl">
             <AnimatedText
               text="Let me show you what I've been working on."
@@ -542,16 +609,32 @@ function useStoryPages(): StoryPage[] {
     },
 
     // ── Pages 8-12: Individual Projects ──
-    ...projects.map((project, idx) => ({
-      id: `project-${idx}`,
-      render: () => <ProjectSlide project={project} />
-    })),
+    {
+      id: "project-1",
+      render: () => <ProjectSlide project={projects[0]} onOpenPopup={onOpenPopup} />,
+    },
+    {
+      id: "project-2",
+      render: () => <ProjectSlide project={projects[1]} onOpenPopup={onOpenPopup} />,
+    },
+    {
+      id: "project-3",
+      render: () => <ProjectSlide project={projects[2]} onOpenPopup={onOpenPopup} />,
+    },
+    {
+      id: "project-4",
+      render: () => <ProjectSlide project={projects[3]} onOpenPopup={onOpenPopup} />,
+    },
+    {
+      id: "project-5",
+      render: () => <ProjectSlide project={projects[4]} onOpenPopup={onOpenPopup} />,
+    },
 
     // ── Page 13: Connect ──
     {
       id: "connect",
       render: () => (
-        <div className="flex flex-col items-center justify-center h-full px-6 text-center">
+        <div className="flex flex-col items-center justify-center min-h-full py-24 px-6 text-center">
           <h2 className="text-3xl md:text-5xl font-bold text-charcoal mb-10 max-w-2xl">
             <AnimatedText text="Let's build something together." delay={0.2} stagger={0.1} />
           </h2>
@@ -604,22 +687,34 @@ function useStoryPages(): StoryPage[] {
             ))}
           </motion.div>
 
-          <motion.a
-            href="/pdf/CV-Dorojatun-Chandrabumi.pdf"
-            download
-            className="inline-flex items-center gap-2 px-8 py-4 bg-tosca text-soft-white rounded-full font-semibold shadow-xl shadow-tosca/20 hover:bg-tosca-dark transition-colors duration-300"
+          <motion.div
+            className="flex flex-col sm:flex-row gap-4 mt-8"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.8 }}
-            whileHover={{ scale: 1.03, y: -2 }}
-            whileTap={{ scale: 0.97 }}
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-                d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-            </svg>
-            Download CV
-          </motion.a>
+            <a
+              href="/pdf/CV-Dorojatun-Chandrabumi.pdf"
+              download
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-tosca text-soft-white rounded-full font-semibold shadow-xl shadow-tosca/20 hover:bg-tosca-dark transition-colors duration-300"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                  d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+              Download CV
+            </a>
+
+            <button
+              onClick={() => window.location.reload()}
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-soft-white text-charcoal rounded-full font-semibold border border-charcoal/10 hover:bg-charcoal/5 transition-colors duration-300 cursor-pointer"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+              </svg>
+              Back to Landing
+            </button>
+          </motion.div>
 
           <motion.p
             className="mt-16 text-xs text-charcoal/30 tracking-wide"
@@ -638,10 +733,15 @@ function useStoryPages(): StoryPage[] {
 // ─── Main StoryFlow ──────────────────────────────────────────────────────────
 
 export default function StoryFlow() {
-  const pages = useStoryPages();
   const [currentPage, setCurrentPage] = useState(0);
-  const [direction, setDirection] = useState(1); // 1 = forward, -1 = back
+  const [direction, setDirection] = useState(0);
+  const [popupProject, setPopupProject] = useState<typeof projects[0] | null>(null);
+  const [popupImgIndex, setPopupImgIndex] = useState(0);
 
+  const pages = useStoryPages((project, imgIndex) => {
+    setPopupProject(project);
+    setPopupImgIndex(imgIndex);
+  });
   const totalPages = pages.length;
   const isLastPage = currentPage === totalPages - 1;
   const isFirstPage = currentPage === 0;
@@ -679,6 +779,91 @@ export default function StoryFlow() {
     }),
   };
 
+  // Scroll and swipe to navigate
+  useEffect(() => {
+    const wrapper = document.getElementById('story-wrapper');
+    if (!wrapper) return;
+
+    let touchStartY = 0;
+    let touchEndY = 0;
+    let isNavigating = false;
+    let wasAtTopAtStart = false;
+    let wasAtBottomAtStart = false;
+
+    const getActiveContainer = () => document.querySelector('.story-page-container') as HTMLElement;
+
+    const handleWheel = (e: WheelEvent) => {
+      if (document.querySelector('.popup-active')) return;
+      if (isFirstPage) return;
+      if (isNavigating) return;
+      const container = getActiveContainer();
+      if (!container) return;
+
+      const { scrollTop, scrollHeight, clientHeight } = container;
+      const isAtTop = scrollTop <= 1;
+      const isAtBottom = Math.abs(scrollHeight - clientHeight - scrollTop) <= 2;
+
+      if (e.deltaY > 0) {
+        if (isAtBottom && !isLastPage) {
+          isNavigating = true;
+          goNext();
+          setTimeout(() => { isNavigating = false; }, 1200);
+        }
+      } else if (e.deltaY < 0) {
+        if (isAtTop && !isFirstPage) {
+          isNavigating = true;
+          goPrev();
+          setTimeout(() => { isNavigating = false; }, 1200);
+        }
+      }
+    };
+
+    const handleTouchStart = (e: TouchEvent) => {
+      if (document.querySelector('.popup-active')) return;
+      touchStartY = e.touches[0].clientY;
+      const container = getActiveContainer();
+      if (container) {
+        wasAtTopAtStart = container.scrollTop <= 1;
+        wasAtBottomAtStart = Math.abs(container.scrollHeight - container.clientHeight - container.scrollTop) <= 2;
+      }
+    };
+
+    const handleTouchEnd = (e: TouchEvent) => {
+      if (document.querySelector('.popup-active')) return;
+      if (isFirstPage) return;
+      if (isNavigating) return;
+      touchEndY = e.changedTouches[0].clientY;
+      const container = getActiveContainer();
+      if (!container) return;
+
+      const isAtTopNow = container.scrollTop <= 1;
+      const isAtBottomNow = Math.abs(container.scrollHeight - container.clientHeight - container.scrollTop) <= 2;
+      
+      const deltaY = touchStartY - touchEndY;
+      
+      // Only navigate if they started the swipe at the boundary AND are still at the boundary
+      if (deltaY > 40 && wasAtBottomAtStart && isAtBottomNow && !isLastPage) {
+        isNavigating = true;
+        goNext();
+        setTimeout(() => isNavigating = false, 1200);
+      } else if (deltaY < -40 && wasAtTopAtStart && isAtTopNow && !isFirstPage) {
+        isNavigating = true;
+        goPrev();
+        setTimeout(() => isNavigating = false, 1200);
+      }
+    };
+
+    wrapper.addEventListener('wheel', handleWheel, { passive: true });
+    wrapper.addEventListener('touchstart', handleTouchStart, { passive: true });
+    wrapper.addEventListener('touchend', handleTouchEnd, { passive: true });
+
+    return () => {
+      wrapper.removeEventListener('wheel', handleWheel);
+      wrapper.removeEventListener('touchstart', handleTouchStart);
+      wrapper.removeEventListener('touchend', handleTouchEnd);
+    };
+  }, [isFirstPage, isLastPage, goNext, goPrev]);
+
   return (
     <div className="h-full w-full relative flex flex-col" style={{ background: "var(--cream)" }}>
       {/* Ambient background blobs */}
@@ -696,7 +881,7 @@ export default function StoryFlow() {
       />
 
       {/* Story content area */}
-      <div className="flex-1 relative overflow-hidden">
+      <div id="story-wrapper" className="flex-1 relative overflow-hidden">
         <AnimatePresence mode="wait" custom={direction}>
           <motion.div
             key={pages[currentPage].id}
@@ -706,7 +891,7 @@ export default function StoryFlow() {
             animate="center"
             exit="exit"
             transition={{ duration: 0.45, ease: [0.25, 0.4, 0.25, 1] }}
-            className="absolute inset-0"
+            className="story-page-container absolute inset-0 overflow-y-auto overflow-x-hidden journey-scroll"
           >
             {pages[currentPage].render()}
           </motion.div>
@@ -714,24 +899,26 @@ export default function StoryFlow() {
       </div>
 
       {/* Bottom bar: progress + navigation */}
-      <div className="relative z-20 px-6 py-5 flex items-center justify-between">
+      <div className="relative z-20 px-6 py-5 flex items-center justify-center md:justify-between">
         {/* Back button */}
-        <motion.button
-          onClick={goPrev}
-          disabled={isFirstPage}
-          className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 cursor-pointer ${
-            isFirstPage
-              ? "opacity-0 pointer-events-none"
-              : "text-charcoal/60 hover:text-charcoal bg-charcoal/5 hover:bg-charcoal/10"
-          }`}
-          whileHover={!isFirstPage ? { x: -3 } : undefined}
-          whileTap={!isFirstPage ? { scale: 0.95 } : undefined}
-        >
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-          </svg>
-          Back
-        </motion.button>
+        <div className="hidden md:block">
+          <motion.button
+            onClick={goPrev}
+            disabled={isFirstPage}
+            className={`flex items-center gap-1 sm:gap-2 px-3 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-medium transition-all duration-300 cursor-pointer ${
+              isFirstPage
+                ? "opacity-0 pointer-events-none"
+                : "text-charcoal/60 hover:text-charcoal bg-charcoal/5 hover:bg-charcoal/10"
+            }`}
+            whileHover={!isFirstPage ? { x: -3 } : undefined}
+            whileTap={!isFirstPage ? { scale: 0.95 } : undefined}
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+            Back
+          </motion.button>
+        </div>
 
         {/* Progress dots */}
         <div className="flex items-center gap-1.5">
@@ -740,10 +927,10 @@ export default function StoryFlow() {
               key={i}
               className={`rounded-full transition-all duration-400 ${
                 i === currentPage
-                  ? "w-6 h-2 bg-tosca"
+                  ? "w-4 sm:w-6 h-1.5 sm:h-2 bg-tosca"
                   : i < currentPage
-                  ? "w-2 h-2 bg-tosca/40"
-                  : "w-2 h-2 bg-charcoal/15"
+                  ? "w-1.5 sm:w-2 h-1.5 sm:h-2 bg-tosca/40"
+                  : "w-1.5 sm:w-2 h-1.5 sm:h-2 bg-charcoal/15"
               }`}
               layout
               transition={{ type: "spring", stiffness: 300, damping: 25 }}
@@ -752,23 +939,122 @@ export default function StoryFlow() {
         </div>
 
         {/* Next button */}
-        <motion.button
-          onClick={goNext}
-          disabled={isLastPage}
-          className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 cursor-pointer ${
-            isLastPage
-              ? "opacity-0 pointer-events-none"
-              : "bg-tosca text-soft-white hover:bg-tosca-dark shadow-lg shadow-tosca/20"
-          }`}
-          whileHover={!isLastPage ? { x: 3 } : undefined}
-          whileTap={!isLastPage ? { scale: 0.95 } : undefined}
-        >
-          Continue
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-          </svg>
-        </motion.button>
+        <div className="hidden md:block">
+          <motion.button
+            onClick={goNext}
+            disabled={isLastPage}
+            className={`flex items-center gap-1 sm:gap-2 px-3 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-300 cursor-pointer ${
+              isLastPage
+                ? "opacity-0 pointer-events-none"
+                : "bg-tosca text-soft-white hover:bg-tosca-dark shadow-lg shadow-tosca/20"
+            }`}
+            whileHover={!isLastPage ? { x: 3 } : undefined}
+            whileTap={!isLastPage ? { scale: 0.95 } : undefined}
+          >
+            Continue
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </motion.button>
+        </div>
       </div>
+
+      {/* Global Image Popup (Rendered above everything) */}
+      <AnimatePresence>
+        {popupProject && popupProject.screenshots && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setPopupProject(null)}
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-charcoal/60 backdrop-blur-sm p-4 md:p-8 cursor-zoom-out popup-active"
+          >
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.95, opacity: 0, y: 20 }}
+              transition={{ type: "spring", damping: 30, stiffness: 300 }}
+              className="relative w-full max-w-5xl bg-soft-white rounded-2xl shadow-2xl p-2 md:p-4 cursor-default"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Image Container */}
+              <div className="relative w-full aspect-[4/3] md:aspect-[16/10] bg-charcoal/5 rounded-xl overflow-hidden flex items-center justify-center">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={popupImgIndex}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20 }}
+                    transition={{ duration: 0.3 }}
+                    className="relative w-full h-full"
+                  >
+                    <Image
+                      src={popupProject.screenshots[popupImgIndex]}
+                      alt={`${popupProject.company} screenshot ${popupImgIndex + 1}`}
+                      fill
+                      className="object-contain"
+                    />
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+
+              {/* Prev Button */}
+              {popupProject.screenshots.length > 1 && (
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setPopupImgIndex((prev) => (prev === 0 ? popupProject.screenshots!.length - 1 : prev - 1));
+                  }}
+                  className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 rounded-full bg-soft-white/80 hover:bg-soft-white shadow-lg flex items-center justify-center text-charcoal transition-colors border border-charcoal/10 z-10 cursor-pointer"
+                >
+                  <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                  </svg>
+                </button>
+              )}
+
+              {/* Next Button */}
+              {popupProject.screenshots.length > 1 && (
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setPopupImgIndex((prev) => (prev === popupProject.screenshots!.length - 1 ? 0 : prev + 1));
+                  }}
+                  className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 rounded-full bg-soft-white/80 hover:bg-soft-white shadow-lg flex items-center justify-center text-charcoal transition-colors border border-charcoal/10 z-10 cursor-pointer"
+                >
+                  <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
+              )}
+
+              {/* Close Button */}
+              <button
+                onClick={() => setPopupProject(null)}
+                className="absolute -top-3 -right-3 md:-top-4 md:-right-4 w-10 h-10 rounded-full bg-soft-white shadow-lg flex items-center justify-center text-charcoal hover:bg-cream transition-colors border border-charcoal/10 z-20 cursor-pointer"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+
+              {/* Carousel Indicators */}
+              {popupProject.screenshots.length > 1 && (
+                <div className="absolute bottom-6 md:bottom-8 left-0 right-0 flex justify-center gap-2 z-10">
+                  {popupProject.screenshots.map((_, i) => (
+                    <div
+                      key={i}
+                      className={`w-2 h-2 rounded-full transition-all duration-300 shadow-sm ${
+                        i === popupImgIndex ? "bg-tosca w-6" : "bg-charcoal/20"
+                      }`}
+                    />
+                  ))}
+                </div>
+              )}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

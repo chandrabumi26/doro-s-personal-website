@@ -12,7 +12,7 @@ const projects: ProjectData[] = [
         title: "Mbizmarket",
         company: "Mbizmarket.co.id",
         role: "Frontend Developer",
-        period: "2024 - Present",
+        period: "2024 - 2026",
         description:
             "Mbizmarket is an e-procurement platform based on marketplace concept, primarily used by local governments for goods procurement. The platform provides a comprehensive solution for managing procurement processes, from product discovery to transaction completion.",
         logo: "/projects/mbizmarket/logo.png",

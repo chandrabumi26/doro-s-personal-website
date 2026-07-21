@@ -33,7 +33,7 @@ export default function Landing({ onEnterJourney }: LandingProps) {
 
   return (
     <motion.div
-      className="min-h-screen flex items-center justify-center relative overflow-hidden"
+      className="min-h-screen flex items-center justify-center relative overflow-y-auto overflow-x-hidden py-12"
       style={{ background: "var(--cream)" }}
     >
       {/* Ambient gradient blobs */}
@@ -115,7 +115,7 @@ export default function Landing({ onEnterJourney }: LandingProps) {
         {/* Name */}
         <div className="overflow-hidden mb-2">
           <motion.h1
-            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold text-charcoal leading-[1.1] tracking-tight"
+            className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold text-charcoal leading-[1.1] tracking-tight"
             initial={{ opacity: 0, y: 40, filter: "blur(12px)" }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
@@ -125,7 +125,7 @@ export default function Landing({ onEnterJourney }: LandingProps) {
         </div>
         <div className="overflow-hidden mb-8">
           <motion.h1
-            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold text-tosca leading-[1.1] tracking-tight"
+            className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold text-tosca leading-[1.1] tracking-tight"
             initial={{ opacity: 0, y: 40, filter: "blur(12px)" }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1], delay: 0.4 }}

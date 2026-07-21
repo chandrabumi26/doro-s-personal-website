@@ -208,7 +208,7 @@ export default function About() {
                             variants={itemVariants}
                             className="text-charcoal/70 text-lg leading-relaxed"
                         >
-                            With over 4 years of experience in frontend development, I
+                            With over 5 years of experience in frontend development, I
                             specialize in building modern, responsive web applications using
                             React, Next.js, Vue.js, and TypeScript. I believe in writing
                             clean, maintainable code that delivers exceptional user
