@@ -9,6 +9,7 @@ import JourneyMusic from "./JourneyMusic";
 export default function JourneyContainer() {
   const [step, setStep] = useState<"landing" | "music_prompt" | "story">("landing");
   const [musicStarted, setMusicStarted] = useState(false);
+  const [musicVolume, setMusicVolume] = useState(50);
 
   const handleEnterJourney = useCallback(() => {
     setStep("music_prompt");
@@ -21,7 +22,7 @@ export default function JourneyContainer() {
 
   return (
     <>
-      <JourneyMusic shouldPlay={musicStarted} />
+      <JourneyMusic shouldPlay={musicStarted} initialVolume={musicVolume / 100} />
 
       <AnimatePresence mode="wait">
         {step === "landing" && (
@@ -60,6 +61,25 @@ export default function JourneyContainer() {
                 For the best experience, please put your headphones on.<br/><br/>
                 Instrumental music (The Narcissist by Blur) will play as you continue.
               </p>
+
+              {/* Volume Slider */}
+              <div className="w-full mt-2 flex flex-col items-center bg-white/50 p-4 rounded-2xl border border-charcoal/5">
+                <p className="text-sm font-bold text-charcoal mb-3 text-center">How loud do you want the music?</p>
+                <div className="flex items-center gap-3 w-full max-w-[220px]">
+                  <svg className="w-4 h-4 text-charcoal/40 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+                  </svg>
+                  <input
+                    type="range"
+                    min="0"
+                    max="100"
+                    value={musicVolume}
+                    onChange={(e) => setMusicVolume(parseInt(e.target.value))}
+                    className="w-full accent-tosca cursor-pointer h-1.5 bg-charcoal/10 rounded-lg appearance-none"
+                  />
+                  <span className="text-sm font-bold text-tosca min-w-[36px] text-right">{musicVolume}%</span>
+                </div>
+              </div>
               <motion.button
                 onClick={handleStartStory}
                 className="mt-4 px-8 py-3 bg-tosca text-soft-white rounded-full font-semibold shadow-lg hover:bg-tosca-dark transition-colors flex items-center gap-2 cursor-pointer"

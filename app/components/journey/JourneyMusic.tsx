@@ -6,12 +6,13 @@ import Image from "next/image";
 
 interface JourneyMusicProps {
   shouldPlay: boolean;
+  initialVolume?: number;
 }
 
-export default function JourneyMusic({ shouldPlay }: JourneyMusicProps) {
+export default function JourneyMusic({ shouldPlay, initialVolume = 0.5 }: JourneyMusicProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [volume, setVolume] = useState(0.1);
+  const [volume, setVolume] = useState(initialVolume);
   const [isVolumeOpen, setIsVolumeOpen] = useState(false);
   const [isMobileExpanded, setIsMobileExpanded] = useState(true);
   
@@ -25,11 +26,16 @@ export default function JourneyMusic({ shouldPlay }: JourneyMusicProps) {
     timeoutRef.current = setTimeout(() => setIsMobileExpanded(false), 3000);
   }, []);
 
+  // Sync with prop
+  useEffect(() => {
+    setVolume(initialVolume);
+  }, [initialVolume]);
+
   // Initialize audio
   useEffect(() => {
     const audio = new Audio("/music/Blur-The-Narcissist-(Instrumental).mp3");
     audio.loop = true;
-    audio.volume = 0.1;
+    audio.volume = initialVolume;
     audioRef.current = audio;
 
     audio.ontimeupdate = () => {
