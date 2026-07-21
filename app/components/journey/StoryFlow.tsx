@@ -315,7 +315,7 @@ function ProjectSlide({ project }: { project: typeof projects[0] }) {
                   <div
                     key={i}
                     className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                      i === currentImg ? "bg-tosca w-6" : "bg-tosca/30"
+                      i === currentImg ? "bg-charcoal w-6" : "bg-charcoal/30"
                     }`}
                   />
                 ))}
@@ -568,7 +568,7 @@ function useStoryPages(): StoryPage[] {
                 href={link.href}
                 target={link.href.startsWith("http") ? "_blank" : undefined}
                 rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                className="group flex items-center gap-4 px-6 py-4 bg-soft-white rounded-full border border-charcoal/10 hover:border-charcoal hover:shadow-lg transition-all duration-300"
+                className="group flex items-center gap-4 px-6 py-4 bg-soft-white rounded-full border border-charcoal/10 hover:shadow-lg transition-all duration-300"
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1.3 + i * 0.1, duration: 0.4 }}
